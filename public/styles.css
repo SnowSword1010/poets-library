@@ -1,0 +1,43 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: #f9f9f9;
+}
+
+.wordForm {
+  text-align: center;
+  font-size: xx-large;
+}
+
+.inputWord {
+  border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style: hidden;
+  text-align: center;
+  display: inline-block;
+  margin: 3% 0 2%;
+}
+
+/* removes outline from textbozx after the user clicks on it */
+.inputWord:focus {
+  outline: none;
+}
+
+.rhymeCard {
+  cursor: pointer;
+  display: block;
+  background-color: #ffe0ac;
+  margin: 5% 2% 2% 5%;
+  text-align: center;
+  font-size: 1.2em;
+  border-radius: 15px;
+  padding: 15px;
+  width: 200px;
+}
+
+.rhymeCard:hover {
+  background-color: #ffacb7;
+}

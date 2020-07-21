@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Word from "./components/Word";
 import RhymeCard from "./components/RhymeCard";
+import { render } from 'react-dom';
 //import ReactDOM from 'react-dom';
 
 function App() {
@@ -36,15 +37,16 @@ function App() {
       )
     }
     else if (technology === "Frontend") {
+
       return (
-        <div><h1>This is the Frontend workspace</h1>
+        <div>
           <Word onShowRhymes={showRhymes}></Word>
-          {/* Creating a RhymeCard for each of the rhyming word */}
-          {listOfRhymes.map((element) => {
-            return (
-              <RhymeCard name = {element}></RhymeCard>
-            )
-          })}
+          {/* Creating a RhymeCard for each of the rhyming word */
+            //renderWords(listOfRhymes)
+          }
+          <div className="row">
+            {listOfRhymes.map((element) => <div className="col-lg-2"><RhymeCard name={element}></RhymeCard></div>)}
+          </div>
         </div>
       )
     }

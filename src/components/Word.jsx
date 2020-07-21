@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ReactDOM from 'react-dom';
+// import ArrowDownwardTwoToneIcon from './@material-ui/icons/ArrowDownwardTwoTone';
 
 // Word is the name of the functional compnent comprising of the input box (in which the user will input his desired word) and the submit button
 function Word(props) {
@@ -49,9 +50,9 @@ function Word(props) {
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
-                <input className = "inputWord" name="word" onChange={handleChange} placeholder="Enter your word"></input>
-                <button type="submit">Submit</button>
+            <form className = "wordForm" onSubmit={handleSubmit}>
+                <input className = "inputWord" name="word" onChange={handleChange} placeholder="I want rhyming words for"></input>
+                <button type="submit">{/* <ArrowDownwardTwoToneIcon /> */} Submit</button>
             </form>
         </div>
     )
