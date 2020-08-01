@@ -13,9 +13,6 @@ const bcrypt = require('bcrypt');
 app.use(cors()); // it enables all cors requests
 app.use(express.json());
 
-// app.use(session({
-
-
 mongoose.connect('mongodb://localhost:27017/userDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
 const userSchema = {
@@ -27,10 +24,6 @@ const userSchema = {
 };
 
 const User = new mongoose.model("User", userSchema);
-
-app.get("/signup", function (req, res) {
-    console.log("Hello");
-})
 
 app.post("/signup", function (req, res) {
     let newUser = new User({
@@ -75,7 +68,7 @@ app.post('/login', (req, res) => {
                 console.log("Logged in");
                 res.send({
                     isLoggedIn: true,
-                    userObj = user
+                    userObj: user
                 })
             }
             else {
