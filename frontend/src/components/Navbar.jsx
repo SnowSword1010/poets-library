@@ -3,6 +3,28 @@ import ReactDOM from 'react-dom';
 
 function Navbar(props) {
 
+    // The UserReg function is primarily used to render suitable Login Pages based on whether the user is logged in or not.
+    function UserReg() {
+        console.log(props.auth);
+        // props.auth gives access to authentication variable in the App.js file. It becomes easier to work with the user's attributes from there.
+        if (props.auth.isLoggedIn === false) {
+            return (
+                <form className="form-inline my-2 my-lg-0">
+                    <button className="btn btn-outline-success my-2 my-sm-0" type="submit" href="/login" onClick={props.handleClick} name="login">Log In</button>
+                    <button className="btn btn-outline-success my-2 my-sm-0" type="submit" href="/login" onClick={props.handleClick} name="signup">Sign Up </button>
+                </form>
+            )
+        }
+        else {
+            return (
+                <form className="form-inline my-2 my-lg-0">
+                    <p>A poetic day to {props.auth.userObj.firstName}!</p>
+                    <button className="btn btn-outline-success my-2 my-sm-0" type="submit" href="/" onClick={props.handleLogOutClick} name="logout">Log Out</button>
+                </form>
+            )
+        }
+    }
+
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <a className="navbar-brand" href="/">Logo</a>
@@ -31,10 +53,7 @@ function Navbar(props) {
                         <a className="nav-link" href="#" onClick={props.handleClick} name="quote">Gimme a Quote!</a>
                     </li>
                 </ul>
-                <form className="form-inline my-2 my-lg-0">
-                    <button className="btn btn-outline-success my-2 my-sm-0" type="submit" href="/login" onClick={props.handleClick} name="login">Log In</button>
-                    <button className="btn btn-outline-success my-2 my-sm-0" type="submit" href="/login" onClick={props.handleClick} name="signup">Sign Up </button>
-                </form>
+            <UserReg></UserReg>
             </div>
         </nav>
     )

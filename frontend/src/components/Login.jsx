@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
 
-function Login() {
+function Login(props) {
 
     function handleLogInClick(event) {
         event.preventDefault();
@@ -12,7 +12,8 @@ function Login() {
         }
         axios.post("http://localhost:5000/login", formData).then(response => {
             // response is an onject which sets islogin to true and fetches the data concerned with the user in a JSON object.
-            // We have to pass this response to a function 
+            // We have to pass this response to a function
+            props.userLoggedIn(response);
             console.log("User authenticated");
         });
     }

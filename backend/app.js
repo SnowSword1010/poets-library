@@ -68,7 +68,12 @@ app.post('/login', (req, res) => {
                 console.log("Logged in");
                 res.send({
                     isLoggedIn: true,
-                    userObj: user
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    email: user.email,
+                    password: user.password,
+                    data: user.data
+                    //userObj: user
                 })
             }
             else {
