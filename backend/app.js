@@ -42,6 +42,7 @@ app.post("/signup", function (req, res) {
                 User.create(newUser)
                 .then(user => {
                     console.log("Successfully saved user to database.");
+                    res.redirect("/poet-prof-create");
                     res.send({
                         isSignedUp: true,
                         userObj: user

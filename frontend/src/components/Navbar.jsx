@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 
 function Navbar(props) {
 
@@ -9,10 +10,12 @@ function Navbar(props) {
         // props.auth gives access to authentication variable in the App.js file. It becomes easier to work with the user's attributes from there.
         if (props.auth.isLoggedIn === false) {
             return (
-                <form className="form-inline my-2 my-lg-0">
-                    <button className="btn btn-outline-success my-2 my-sm-0" type="submit" href="/login" onClick={props.handleClick} name="login">Log In</button>
-                    <button className="btn btn-outline-success my-2 my-sm-0" type="submit" href="/login" onClick={props.handleClick} name="signup">Sign Up </button>
-                </form>
+                <Router>
+                    <form className="form-inline my-2 my-lg-0">
+                        <Link to="/login" className="btn btn-outline-success my-2 my-sm-0">Log In</Link>
+                        <Link to="/signup" className="btn btn-outline-success my-2 my-sm-0">Sign Up</Link>
+                    </form>
+                </Router>
             )
         }
         else {
@@ -53,7 +56,7 @@ function Navbar(props) {
                         <a className="nav-link" href="#" onClick={props.handleClick} name="quote">Gimme a Quote!</a>
                     </li>
                 </ul>
-            <UserReg></UserReg>
+                <UserReg></UserReg>
             </div>
         </nav>
     )

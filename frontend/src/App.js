@@ -7,7 +7,8 @@ import { render } from 'react-dom';
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import LogInToContinue from "./components/LogInToContinue";
-//import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import ReactDOM from 'react-dom';
 
 function App() {
 
@@ -33,7 +34,7 @@ function App() {
   // The handleClick function is used to update the technology variable based on the user's clicked button on navbar
   function handleClick(e) {
     setTechnology(e.target.name)
-    e.preventDefault();
+    //e.preventDefault();
   }
 
   // The handleAuthentication function is used to set the attributes of the user who successfully logs in.
@@ -63,47 +64,61 @@ function App() {
     })
   }
 
-  function Body() {
-    if (technology === "") {
-      return (
-        // renders the Home page
-        <Home></Home>
-      )
-    }
-    else if (technology === "rhyme") {
-      if (authentication.isLoggedIn) {
-        return (
-          // renders the Rhyming Tool Page
-          <RhymingTool></RhymingTool>
-        )
-      }
-      else {
-        return (
-          <LogInToContinue></LogInToContinue>
-        )
-      }
-    }
-    else if (technology === "login") {
-      return (
-        // redners the Login Page
-        <Login userLoggedIn={handleAuthentication}></Login>
-      )
-    }
-    else if (technology === "signup") {
-      return (
-        // redners the SignUp Page
-        <SignUp></SignUp>
-      )
-    }
-  }
+  // function Body() {
+  //   if (technology === "") {
+  //     return (
+  //       // renders the Home page
+  //       <Home></Home>
+  //     )
+  //   }
+  //   else if (technology === "rhyme") {
+  //     if (authentication.isLoggedIn) {
+  //       return (
+  //         // renders the Rhyming Tool Page
+  //         <RhymingTool></RhymingTool>
+  //       )
+  //     }
+  //     else {
+  //       return (
+  //         <LogInToContinue></LogInToContinue>
+  //       )
+  //     }
+  //   }
+  //   else if (technology === "login") {
+  //     return (
+  //       // redners the Login Page
+  //       <Login userLoggedIn={handleAuthentication}></Login>
+  //     )
+  //   }
+  //   else if (technology === "signup") {
+  //     return (
+  //       // redners the SignUp Page
+  //       <Router>
+  //         <Route path="/signup" component={SignUp}></Route>
+  //       </Router>
+  //     )
+  //   }
+  // }
   return (
-    <div>
-      <div className="App">
-        <Heading></Heading>
+    <Router>
+
+      <div>
+        <div className="App">
+          <Heading></Heading>
+        </div>
+        <Navbar handleClick={handleClick} auth={authentication} handleLogoutClick={handleLogoutClick}></Navbar>
+        <Switch>
+          <Route path="/login" component={Login} />
+          <Route path="/signup">
+            <SignUp></SignUp>
+          </Route>
+          <Route path="/" exact>
+            <Home></Home>
+          </Route>
+        </Switch>
       </div>
-      <Navbar handleClick={handleClick} auth={authentication} handleLogoutClick={handleLogoutClick}></Navbar>
-      <Body></Body>
-    </div>
+    </Router>
+
   )
 }
 export default App;
