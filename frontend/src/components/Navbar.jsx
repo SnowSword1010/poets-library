@@ -10,19 +10,19 @@ function Navbar(props) {
         // props.auth gives access to authentication variable in the App.js file. It becomes easier to work with the user's attributes from there.
         if (props.auth.isLoggedIn === false) {
             return (
-                <Router>
-                    <form className="form-inline my-2 my-lg-0">
-                        <Link to="/login" className="btn btn-outline-success my-2 my-sm-0">Log In</Link>
-                        <Link to="/signup" className="btn btn-outline-success my-2 my-sm-0">Sign Up</Link>
-                    </form>
-                </Router>
+
+                <form className="form-inline my-2 my-lg-0">
+                    <Link to="/login" className="btn btn-outline-success my-2 my-sm-0">Log In</Link>
+                    <Link to="/signup" className="btn btn-outline-success my-2 my-sm-0">Sign Up</Link>
+                </form>
+
             )
         }
         else {
             return (
                 <form className="form-inline my-2 my-lg-0">
                     <p>A poetic day to {props.auth.userObj.firstName}!</p>
-                    <button className="btn btn-outline-success my-2 my-sm-0" type="submit" href="/" onClick={props.handleLogOutClick} name="logout">Log Out</button>
+                    <Link to = "/" className="btn btn-outline-success my-2 my-sm-0" onClick={props.handleLogOutClick} name="logout">Log Out</Link>
                 </form>
             )
         }
@@ -44,16 +44,20 @@ function Navbar(props) {
                         <a className="nav-link" href="#">Link</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#rhymes" onClick={props.handleClick} name="rhyme">Rhyming Tool</a>
+                        {/* <a className="nav-link" href="#rhymes" onClick={props.handleClick} name="rhyme">Rhyming Tool</a> */}
+                        <Link to="/rhymingtool" className="nav-link" name="Rhyming Tool">Rhyming Tool</Link>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#" onClick={props.handleClick} name="New Poem">New Poem</a>
+                        {/* <a className="nav-link" href="#" onClick={props.handleClick} name="New Poem">New Poem</a> */}
+                        <Link to="/newpoetry" className="nav-link" name="New Poem">New Poem</Link>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#" onClick={props.handleClick} name="Saved Poetries">Saved Poetries</a>
+                        {/* <a className="nav-link" href="#" onClick={props.handleClick} name="Saved Poetries">Saved Poetries</a> */}
+                        <Link to="/savedpoetries" className="nav-link" name="Saved Poetries">Saved Poetries</Link>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#" onClick={props.handleClick} name="quote">Gimme a Quote!</a>
+                        {/* <a className="nav-link" href="#" onClick={props.handleClick} name="quote">Gimme a Quote!</a> */}
+                        <Link to="/quote" className="nav-link" name="Quote">Gimme a Quote!</Link>
                     </li>
                 </ul>
                 <UserReg></UserReg>

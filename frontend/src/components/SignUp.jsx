@@ -1,9 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
+import  {Link, Redirect, useHistory } from 'react-router-dom';
 
 function SignUp() {
 
+    // Throught the useHistory library we can link to another router without explicitly doing so with the link tag.
+    let history = useHistory();
     function handleSignUpClick(event) {
         event.preventDefault();
         const formData = {
@@ -14,10 +17,11 @@ function SignUp() {
             data: {}
         }
         axios.post("http://localhost:5000/signup", formData).then(response => {
-            console.log("User created");
+            console.log(response);
+            history.push('poetprofilecreation');
         });
     }
-    
+
     return (
         <div>
             <form method="post" action="/signup" onSubmit={handleSignUpClick}>
@@ -41,6 +45,7 @@ function SignUp() {
                     <input className="inputWord" name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" />
                 </div>
                 <button type="submit" class="btn btn-dark">Sign Up</button>
+                {/* <Link to="/poetprofilecreation">Sign Up</Link> */}
             </form>
         </div>
     )

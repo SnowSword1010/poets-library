@@ -7,20 +7,17 @@ import { render } from 'react-dom';
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import LogInToContinue from "./components/LogInToContinue";
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import ReactDOM from 'react-dom';
+import NewPoetry from './components/NewPoetry';
+import PenName from './components/PenName';
 
 function App() {
-
-  // technology is a const that references the body element.
-  // It's the value of technology that tells react which component to render.
-  // The initial state of technology is set as an empty string. That represents the home page.
-  const [technology, setTechnology] = useState("");
 
   // authentication is a constant that references the state of the user who is using the website.
   // It tells react whether the user is logged in or not using its isLoggedIn method
   // The authentication variable is passed to the auth attribute of the navbar component.
-  const [authentication, setAuthentication] = useState({
+  let [authentication, setAuthentication] = useState({
     isLoggedIn: false,
     userObj: {
       firstName: null,
@@ -32,10 +29,10 @@ function App() {
   });
 
   // The handleClick function is used to update the technology variable based on the user's clicked button on navbar
-  function handleClick(e) {
-    setTechnology(e.target.name)
-    //e.preventDefault();
-  }
+  // function handleClick(e) {
+  //   setTechnology(e.target.name)
+  //   e.preventDefault();
+  // }
 
   // The handleAuthentication function is used to set the attributes of the user who successfully logs in.
   function handleAuthentication(obj) {
@@ -64,58 +61,34 @@ function App() {
     })
   }
 
-  // function Body() {
-  //   if (technology === "") {
-  //     return (
-  //       // renders the Home page
-  //       <Home></Home>
-  //     )
-  //   }
-  //   else if (technology === "rhyme") {
-  //     if (authentication.isLoggedIn) {
-  //       return (
-  //         // renders the Rhyming Tool Page
-  //         <RhymingTool></RhymingTool>
-  //       )
-  //     }
-  //     else {
-  //       return (
-  //         <LogInToContinue></LogInToContinue>
-  //       )
-  //     }
-  //   }
-  //   else if (technology === "login") {
-  //     return (
-  //       // redners the Login Page
-  //       <Login userLoggedIn={handleAuthentication}></Login>
-  //     )
-  //   }
-  //   else if (technology === "signup") {
-  //     return (
-  //       // redners the SignUp Page
-  //       <Router>
-  //         <Route path="/signup" component={SignUp}></Route>
-  //       </Router>
-  //     )
-  //   }
-  // }
   return (
     <Router>
-
       <div>
         <div className="App">
           <Heading></Heading>
         </div>
-        <Navbar handleClick={handleClick} auth={authentication} handleLogoutClick={handleLogoutClick}></Navbar>
-        <Switch>
-          <Route path="/login" component={Login} />
-          <Route path="/signup">
-            <SignUp></SignUp>
-          </Route>
-          <Route path="/" exact>
-            <Home></Home>
-          </Route>
-        </Switch>
+        <Navbar auth={authentication} handleLogoutClick={handleLogoutClick}></Navbar>
+        <Route exact path="/login">
+          <Login userLoggedIn={handleAuthentication}></Login>
+        </Route>
+        <Route exact path="/signup">
+          <SignUp></SignUp>
+        </Route>
+        <Route exact path="/">
+          <Home></Home>
+        </Route>
+        <Route exact path="/rhymingtool">
+          <RhymingTool></RhymingTool>
+        </Route>
+        <Route exact path="/newpoetry">
+          <NewPoetry></NewPoetry>
+        </Route>
+        <Route exact path="/savedpoetries">
+          <NewPoetry></NewPoetry>
+        </Route>
+        <Route exact path = "/poetprofilecreation">
+          <PenName></PenName>
+        </Route>
       </div>
     </Router>
 
