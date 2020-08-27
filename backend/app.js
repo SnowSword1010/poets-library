@@ -10,17 +10,34 @@ const passport = require('passport');
 const passportLocalMongoose = require("passport-local-mongoose");
 const bcrypt = require('bcrypt');
 
+// REQUIRING DATABASE SCHEMAS
 const userSchema = require('./user');
 const poetSchema = require('./poet');
+const draftSchema = require('./draft');
+const publishedSchema = require("./published");
+const commentSchema = require('./comment');
+const quoteSchema = require('./quote');
 
 app.use(cors()); // it enables all cors requests
 app.use(express.json());
 
+// MAKING CONNECTIONS TO DATABASES
+// mongoose.connect allows us to connect to only one database on our program. But since, we are working with
+// multiple databases, a mongoose method called createConnection is used to simplify our work.
 const userconn = mongoose.createConnection('mongodb://localhost:27017/userDB', { useNewUrlParser: true, useUnifiedTopology: true });
 const poetconn = mongoose.createConnection('mongodb://localhost:27017/poetDB', { useNewUrlParser: true, useUnifiedTopology: true });
+const draftconn = mongoose.createConnection('mongodb://localhost:27017/draftDB', { useNewUrlParser: true, useUnifiedTopology: true });
+const publishedconn = mongoose.createConnection('mongodb://localhost:27017/publishedDB', { useNewUrlParser: true, useUnifiedTopology: true });
+const commentconn = mongoose.createConnection('mongodb://localhost:27017/commentDB', { useNewUrlParser: true, useUnifiedTopology: true });
+const quoteconn = mongoose.createConnection('mongodb://localhost:27017/quoteDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
+// MAKING MODELS FROM SCHEMAS DATABASE SCHEMAS OBTAINED
 const User = userconn.model("User", userSchema);
 const Poet = poetconn.model("Poet", poetSchema);
+const Draft = poetconn.model("Draft", draftSchema);
+const Published = poetconn.model("Published", publishedSchema);
+const Comment = poetconn.model("Comment", commentSchema);
+const Quote = poetconn.model("Quote", quoteSchema);
 
 // currentSignedUpUser is an object which is used to store information about the user browsing the session currently.
 const currentSignedUpUser = {
