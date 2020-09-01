@@ -18,7 +18,7 @@ function App() {
   // It tells react whether the user is logged in or not using its isLoggedIn method
   // The authentication variable is passed to the auth attribute of the navbar component.
   let [authentication, setAuthentication] = useState({
-    isLoggedIn: false,
+    isLoggedIn: true,
     userObj: {
       firstName: null,
       lastName: null,
@@ -27,12 +27,6 @@ function App() {
       data: null
     }
   });
-
-  // The handleClick function is used to update the technology variable based on the user's clicked button on navbar
-  // function handleClick(e) {
-  //   setTechnology(e.target.name)
-  //   e.preventDefault();
-  // }
 
   // The handleAuthentication function is used to set the attributes of the user who successfully logs in.
   function handleAuthentication(obj) {
@@ -60,38 +54,65 @@ function App() {
       }
     })
   }
-
-  return (
-    <Router>
-      <div>
-        <div className="App">
-          <Heading></Heading>
+  if (authentication.isLoggedIn == true) {
+    return (
+      <Router>
+        <div>
+          <div className="App">
+            <Heading></Heading>
+          </div>
+          <Navbar auth={authentication} handleLogoutClick={handleLogoutClick}></Navbar>
+          <Route exact path="/login">
+            <Login userLoggedIn={handleAuthentication}></Login>
+          </Route>
+          <Route exact path="/">
+            <Home></Home>
+          </Route>
+          <Route exact path="/rhymingtool">
+            <RhymingTool></RhymingTool>
+          </Route>
+          <Route exact path="/newpoetry">
+            <NewPoetry></NewPoetry>
+          </Route>
+          <Route exact path="/savedpoetries">
+            <NewPoetry></NewPoetry>
+          </Route>
         </div>
-        <Navbar auth={authentication} handleLogoutClick={handleLogoutClick}></Navbar>
-        <Route exact path="/login">
-          <Login userLoggedIn={handleAuthentication}></Login>
-        </Route>
-        <Route exact path="/signup">
-          <SignUp></SignUp>
-        </Route>
-        <Route exact path="/">
-          <Home></Home>
-        </Route>
-        <Route exact path="/rhymingtool">
-          <RhymingTool></RhymingTool>
-        </Route>
-        <Route exact path="/newpoetry">
-          <NewPoetry></NewPoetry>
-        </Route>
-        <Route exact path="/savedpoetries">
-          <NewPoetry></NewPoetry>
-        </Route>
-        <Route exact path = "/poetprofilecreation">
-          <PenName></PenName>
-        </Route>
-      </div>
-    </Router>
-
-  )
+      </Router>
+    )
+  }
+  else {
+    return (
+      <Router>
+        <div>
+          <div className="App">
+            <Heading></Heading>
+          </div>
+          <Navbar auth={authentication} handleLogoutClick={handleLogoutClick}></Navbar>
+          <Route exact path="/login">
+            <Login userLoggedIn={handleAuthentication}></Login>
+          </Route>
+          <Route exact path="/signup">
+            <SignUp></SignUp>
+          </Route>
+          <Route exact path="/">
+            <Home></Home>
+          </Route>
+          <Route exact path="/rhymingtool">
+            <div><h1>Log in to access this and other amazing features</h1></div>
+          </Route>
+          <Route exact path="/newpoetry">
+          <div><h1>Log in to access this and other amazing features</h1></div>
+          </Route>
+          <Route exact path="/savedpoetries">
+          <div><h1>Log in to access this and other amazing features</h1></div>
+          </Route>
+          <Route exact path="/poetprofilecreation">
+            <PenName></PenName>
+          </Route>
+        </div>
+      </Router>
+    )
+  }
 }
 export default App;

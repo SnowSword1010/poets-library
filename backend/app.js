@@ -34,10 +34,10 @@ const quoteconn = mongoose.createConnection('mongodb://localhost:27017/quoteDB',
 // MAKING MODELS FROM SCHEMAS DATABASE SCHEMAS OBTAINED
 const User = userconn.model("User", userSchema);
 const Poet = poetconn.model("Poet", poetSchema);
-const Draft = poetconn.model("Draft", draftSchema);
-const Published = poetconn.model("Published", publishedSchema);
-const Comment = poetconn.model("Comment", commentSchema);
-const Quote = poetconn.model("Quote", quoteSchema);
+const Draft = draftconn.model("Draft", draftSchema);
+const Published = publishedconn.model("Published", publishedSchema);
+const Comment = commentconn.model("Comment", commentSchema);
+const Quote = quoteconn.model("Quote", quoteSchema);
 
 // currentSignedUpUser is an object which is used to store information about the user browsing the session currently.
 const currentSignedUpUser = {
