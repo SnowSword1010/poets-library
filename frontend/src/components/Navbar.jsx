@@ -21,7 +21,7 @@ function Navbar(props) {
         else {
             return (
                 <form className="form-inline my-2 my-lg-0">
-                    <p>A poetic day to {props.auth.userObj.firstName}!</p>
+                    <p>A poetic day to {props.auth.poetObj.fName}!</p>
                     <Link to = "/" className="btn btn-outline-success my-2 my-sm-0" onClick={props.handleLogOutClick} name="logout">Log Out</Link>
                 </form>
             )

@@ -1,4 +1,5 @@
 //jshint esversion:6
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const port = 5000;
@@ -9,6 +10,7 @@ const cors = require('cors');
 const passport = require('passport');
 const passportLocalMongoose = require("passport-local-mongoose");
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 // REQUIRING DATABASE SCHEMAS
 const userSchema = require('./user');
@@ -19,7 +21,7 @@ const commentSchema = require('./comment');
 const quoteSchema = require('./quote');
 
 app.use(cors()); // it enables all cors requests
-app.use(express.json());
+app.use(express.json()); // lets our app use json from the body that gets passed upto it inside of the request
 
 // MAKING CONNECTIONS TO DATABASES
 // mongoose.connect allows us to connect to only one database on our program. But since, we are working with
@@ -47,13 +49,30 @@ const currentSignedUpUser = {
     password: null
 }
 
+function authenticateToken(req,res,next){
+    // Our header is gonna have two attributes => the first is gonna be a BEARER
+    // and the second one is gonna be our TOKEN.
+    const authHeader = req.headers['authorization']
+    // This line says that if we have an authHeader then we'll return the authHeader
+    // token portion, otherwise we are gonna return undefined.
+    const token = authHeader && authHeader.split(' ')[1]
+    if (token == null) return res.sendStatus(401)
+
+    // user token is valid but not authorised
+    jwt.verify(token, process.env.ACCESS_TOKEN_KEY, (err, poet) => {
+        if(err) return res.sendStatus(403)
+        // our token is valid
+        req.poet = poet;
+        next();
+    })
+}
+
 app.post("/signup", function (req, res) {
     let newUser = new User({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
         password: req.body.password,
-        data: []
     });
     User.findOne({
         email: req.body.email
@@ -92,14 +111,23 @@ app.post('/login', (req, res) => {
             if (bcrypt.compareSync(req.body.password, user.password)) {
                 // passwords match
                 console.log("Logged in");
-                res.send({
-                    isLoggedIn: true,
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    email: user.email,
-                    password: user.password,
-                    data: user.data
-                    //userObj: user
+                let poetInfo;
+                Poet.findOne({
+                    email: req.body.email
+                }).then(poet => {
+                    const poetInfo = {
+                        isLoggedIn: true,
+                        penName: poet.penName,
+                        fName: poet.fName,
+                        lName: poet.lName,
+                        email: poet.email,
+                    }
+                    // user authenticated
+                    // CREATING JSON WEB TOKEN
+                    // First parameter => Payload => The thing we want to serialise
+                    // Second parameter => Secret Key in order to serialise
+                    const accessToken = jwt.sign(JSON.stringify(poetInfo), process.env.ACCESS_TOKEN_KEY);
+                    res.json({ accessToken: accessToken, poetInfo:poetInfo });
                 })
             }
             else {
@@ -141,6 +169,10 @@ app.post("/poetprofilecreation", (req, res) => {
             console.log("User Name already exits! Try a different one.");
         }
     })
+})
+
+app.get("/login", authenticateToken, (req,res) => {
+    console.log(req);
 })
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));

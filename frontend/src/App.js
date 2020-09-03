@@ -18,26 +18,24 @@ function App() {
   // It tells react whether the user is logged in or not using its isLoggedIn method
   // The authentication variable is passed to the auth attribute of the navbar component.
   let [authentication, setAuthentication] = useState({
-    isLoggedIn: true,
-    userObj: {
-      firstName: null,
-      lastName: null,
+    isLoggedIn: false,
+    poetObj: {
+      penName: null,
+      fName: null,
+      lName: null,
       email: null,
-      password: null,
-      data: null
     }
   });
 
   // The handleAuthentication function is used to set the attributes of the user who successfully logs in.
   function handleAuthentication(obj) {
     setAuthentication({
-      isLoggedIn: obj.data.isLoggedIn,
-      userObj: {
-        firstName: obj.data.firstName,
-        lastName: obj.data.lastName,
-        email: obj.data.email,
-        password: obj.data.password,
-        data: obj.data.data
+      isLoggedIn: obj.isLoggedIn,
+      poetObj: {
+        penName: obj.peName,
+        fName: obj.fName,
+        lName: obj.lName,
+        email: obj.email
       }
     })
   }
@@ -45,12 +43,11 @@ function App() {
   function handleLogoutClick() {
     setAuthentication({
       isLoggedIn: false,
-      userObj: {
-        firstName: null,
-        lastName: null,
-        email: null,
-        password: null,
-        data: null
+      poeObj: {
+        penName: null,
+        fName: null,
+        lName: null,
+        email: null
       }
     })
   }
@@ -96,6 +93,9 @@ function App() {
             <SignUp></SignUp>
           </Route>
           <Route exact path="/">
+            <Home></Home>
+          </Route>
+          <Route exact path="${authentication.userObj.firstName}">
             <Home></Home>
           </Route>
           <Route exact path="/rhymingtool">
