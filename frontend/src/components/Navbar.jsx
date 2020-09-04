@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 
 function Navbar(props) {

@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import axios from "axios";
 
 function Login(props) {
@@ -14,7 +13,7 @@ function Login(props) {
             // response is an onject which sets islogin to true and fetches the data concerned with the user in a JSON object.
             // We have to pass this response to a function
             // const email = event.target.getElementsByClassName('form-group')[0].getElementsByClassName('form-control')[0].value
-            props.userLoggedIn(response.data.poetInfo);
+            console.log(response.data);
             // console.log("User authenticated");
         });
     }

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import RhymeCard from "./RhymeCard";
 import Word from "./Word";
-import ReactDOM from "react-dom";
 
 function RhymingTool() {
     // listOfRhymes is an array of containing the rhyming words of the word inputted by the user. This array has been initialised to an empty array []

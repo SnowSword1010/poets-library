@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import ReactDOM from 'react-dom';
 // import ArrowDownwardTwoToneIcon from './@material-ui/icons/ArrowDownwardTwoTone';
 
 // Word is the name of the functional compnent comprising of the input box (in which the user will input his desired word) and the submit button

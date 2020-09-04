@@ -49,23 +49,20 @@ const currentSignedUpUser = {
     password: null
 }
 
-function authenticateToken(req,res,next){
+const auth = (req, res, next) => {
+    // getting the token out of the header
     // Our header is gonna have two attributes => the first is gonna be a BEARER
     // and the second one is gonna be our TOKEN.
-    const authHeader = req.headers['authorization']
-    // This line says that if we have an authHeader then we'll return the authHeader
-    // token portion, otherwise we are gonna return undefined.
-    const token = authHeader && authHeader.split(' ')[1]
-    if (token == null) return res.sendStatus(401)
-
-    // user token is valid but not authorised
-    jwt.verify(token, process.env.ACCESS_TOKEN_KEY, (err, poet) => {
-        if(err) return res.sendStatus(403)
-        // our token is valid
-        req.poet = poet;
-        next();
-    })
-}
+    const token = req.header("x-auth-token");
+    if (!token)
+        return res.status(401); // next would never be executed
+    const verified = jwt.verify(token, process.env.ACCESS_TOKEN_KEY);
+    if (!verified)
+        return res
+            .status(401)
+            .json({ msg: "Token verification failed, authorisation denied." });
+    console.log(verified);
+};
 
 app.post("/signup", function (req, res) {
     let newUser = new User({
@@ -103,7 +100,7 @@ app.post("/signup", function (req, res) {
     }).catch(err => console.log(err));
 });
 
-app.post('/login', (req, res) => {
+app.post('/login', async (req, res) => {
     User.findOne({
         email: req.body.email,
     }).then(user => {
@@ -111,23 +108,23 @@ app.post('/login', (req, res) => {
             if (bcrypt.compareSync(req.body.password, user.password)) {
                 // passwords match
                 console.log("Logged in");
-                let poetInfo;
                 Poet.findOne({
                     email: req.body.email
                 }).then(poet => {
-                    const poetInfo = {
-                        isLoggedIn: true,
-                        penName: poet.penName,
-                        fName: poet.fName,
-                        lName: poet.lName,
-                        email: poet.email,
-                    }
-                    // user authenticated
+                    // poet authenticated
                     // CREATING JSON WEB TOKEN
                     // First parameter => Payload => The thing we want to serialise
                     // Second parameter => Secret Key in order to serialise
-                    const accessToken = jwt.sign(JSON.stringify(poetInfo), process.env.ACCESS_TOKEN_KEY);
-                    res.json({ accessToken: accessToken, poetInfo:poetInfo });
+                    const token = jwt.sign({ id: poet._id }, process.env.ACCESS_TOKEN_KEY);
+                    res.json({
+                        token,
+                        poet: {
+                            id: poet._id, penName: poet.penName,
+                            fName: poet.fName,
+                            lName: poet.lName,
+                            email: poet.email
+                        }
+                    });
                 })
             }
             else {
@@ -171,8 +168,32 @@ app.post("/poetprofilecreation", (req, res) => {
     })
 })
 
-app.get("/login", authenticateToken, (req,res) => {
-    console.log(req);
+app.get("/poets", auth, async (req, res) => {
+    const poet = await Poet.findById(req.poet);
+    res.json({
+        id: poet._id,
+        penName: poet.penName,
+        fName: poet.fName,
+        lName: poet.lName,
+        email: poet.email
+    });
 })
+
+app.post("/tokenIsValid", async (req, res) => {
+    try {
+        const token = req.header("x-auth-token");
+        if (!token) return res.json(false);
+
+        const verified = jwt.verify(token, process.env.JWT_SECRET);
+        if (!verified) return res.json(false);
+
+        const poet = await Poet.findById(verified.id);
+        if (!poet) return res.json(false);
+
+        return res.json(true);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));
