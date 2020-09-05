@@ -169,6 +169,7 @@ app.post("/poetprofilecreation", (req, res) => {
 })
 
 app.get("/poets", auth, async (req, res) => {
+    console.log("Reached /poets block");
     const poet = await Poet.findById(req.poet);
     res.json({
         id: poet._id,
@@ -181,6 +182,7 @@ app.get("/poets", auth, async (req, res) => {
 
 app.post("/tokenIsValid", async (req, res) => {
     try {
+        console.log("Reached /tokenIsValid block");
         const token = req.header("x-auth-token");
         if (!token) return res.json(false);
 

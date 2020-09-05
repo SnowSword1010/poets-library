@@ -1,30 +1,36 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
+import UserContext from "./context/UserContext";
+import { useHistory } from "react-router-dom";
 
-function Navbar(props) {
+function Navbar() {
+
+    const { poetData, setPoetData } = useContext(UserContext);
+    const history = useHistory();
+
+    function handleLogoutClick() {
+        setPoetData({
+          token: undefined,
+          poet: undefined,
+        });
+        localStorage.setItem("auth-token", "");
+      }
 
     // The UserReg function is primarily used to render suitable Login Pages based on whether the user is logged in or not.
     function UserReg() {
-        console.log(props.auth);
-        // props.auth gives access to authentication variable in the App.js file. It becomes easier to work with the user's attributes from there.
-        if (props.auth.isLoggedIn === false) {
-            return (
+        return (poetData.poet
+            ?
+            <form className="form-inline my-2 my-lg-0">
+                <p>A poetic day to {poetData.poet.penName}!</p>
+                <Link to="/" className="btn btn-outline-success my-2 my-sm-0" onClick={handleLogoutClick} name="logout">Log Out</Link>
+            </form>
+            :
+            <form className="form-inline my-2 my-lg-0">
+                <Link to="/login" className="btn btn-outline-success my-2 my-sm-0">Log In</Link>
+                <Link to="/signup" className="btn btn-outline-success my-2 my-sm-0">Sign Up</Link>
+            </form>
 
-                <form className="form-inline my-2 my-lg-0">
-                    <Link to="/login" className="btn btn-outline-success my-2 my-sm-0">Log In</Link>
-                    <Link to="/signup" className="btn btn-outline-success my-2 my-sm-0">Sign Up</Link>
-                </form>
-
-            )
-        }
-        else {
-            return (
-                <form className="form-inline my-2 my-lg-0">
-                    <p>A poetic day to {props.auth.poetObj.fName}!</p>
-                    <Link to = "/" className="btn btn-outline-success my-2 my-sm-0" onClick={props.handleLogOutClick} name="logout">Log Out</Link>
-                </form>
-            )
-        }
+        )
     }
 
     return (

@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
+import UserContext from "./context/UserContext";
+import { useHistory } from "react-router-dom";
 
 function Login(props) {
+
+    const { setPoetData } = useContext(UserContext);
+    const history = useHistory();
 
     function handleLogInClick(event) {
         event.preventDefault();
@@ -13,7 +18,12 @@ function Login(props) {
             // response is an onject which sets islogin to true and fetches the data concerned with the user in a JSON object.
             // We have to pass this response to a function
             // const email = event.target.getElementsByClassName('form-group')[0].getElementsByClassName('form-control')[0].value
-            console.log(response.data);
+            setPoetData({
+                token: response.data.token,
+                poet: response.data.poet
+            })
+            localStorage.setItem("auth-token", response.data.token);
+            history.push("/");
             // console.log("User authenticated");
         });
     }
