@@ -58,7 +58,7 @@ function Navbar() {
                     </li>
                     <li className="nav-item">
                         {/* <a className="nav-link" href="#" onClick={props.handleClick} name="Saved Poetries">Saved Poetries</a> */}
-                        <Link to="/savedpoetries" className="nav-link" name="Saved Poetries">Saved Poetries</Link>
+                        <Link to="/mypoetries" className="nav-link" name="My Poetries">My Poetries</Link>
                     </li>
                     <li className="nav-item">
                         {/* <a className="nav-link" href="#" onClick={props.handleClick} name="quote">Gimme a Quote!</a> */}

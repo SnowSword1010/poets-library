@@ -44,7 +44,6 @@ function SignUp() {
                     <input className="inputWord" name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" />
                 </div>
                 <button type="submit" class="btn btn-dark">Sign Up</button>
-                {/* <Link to="/poetprofilecreation">Sign Up</Link> */}
             </form>
         </div>
     )

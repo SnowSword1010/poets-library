@@ -1,8 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import RhymeCard from "./RhymeCard";
 import Word from "./Word";
+import axios from "axios";
+import UserContext from "./context/UserContext";
+import { useHistory } from "react-router-dom";
+import LogInToContinue from "./LogInToContinue";
 
 function RhymingTool() {
+
+    const { poetData } = useContext(UserContext);
+    const { history } = useHistory();
+
     // listOfRhymes is an array of containing the rhyming words of the word inputted by the user. This array has been initialised to an empty array []
     // setRhymes is a function that can be used to modify the array listOfRhymes
     const [listOfRhymes, setRhymes] = useState([]);
@@ -13,6 +21,7 @@ function RhymingTool() {
         setRhymes(fetchedRhymes);
     }
     return (
+        poetData.poet ?
         <div>
             <Word onShowRhymes={showRhymes}></Word>
             {/* Creating a RhymeCard for each of the rhyming word */
@@ -22,6 +31,8 @@ function RhymingTool() {
                 {listOfRhymes.map((element) => <div className="col-lg-2"><RhymeCard name={element}></RhymeCard></div>)}
             </div>
         </div>
+        :
+        <LogInToContinue></LogInToContinue>
     )
 }
 

@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
+import UserContext from "./context/UserContext";
+import { useHistory } from "react-router-dom";
+import LogInToContinue from "./LogInToContinue";
 
 function NewPoetry() {
+    const { poetData, setPoetData } = useContext(UserContext);
+    const history = useHistory();
+
+    
     return (
+        poetData.poet ?
         <div>
             <h1>Type Your Poetry Here</h1>
             <form method = "post" action = "/newpoetry?posting">
@@ -13,6 +21,8 @@ function NewPoetry() {
                 </div>
             </form>
         </div>
+        :
+        <LogInToContinue></LogInToContinue>
     )
 }
 

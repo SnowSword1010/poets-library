@@ -12,6 +12,8 @@ import ReactDOM from 'react-dom';
 import NewPoetry from './components/NewPoetry';
 import PenName from './components/PenName';
 import UserContext from './components/context/UserContext';
+import MyPoetries from "./components/MyPoetries";
+import Quote from "./components/Quote";
 import Axios from 'axios';
 
 function App() {
@@ -75,8 +77,11 @@ function App() {
             <Route exact path="/newpoetry">
               <NewPoetry></NewPoetry>
             </Route>
-            <Route exact path="/savedpoetries">
-              <NewPoetry></NewPoetry>
+            <Route exact path="/mypoetries">
+              <MyPoetries></MyPoetries>
+            </Route>
+            <Route exact path="/quote">
+              <Quote></Quote>
             </Route>
           </div>
         </UserContext.Provider>
