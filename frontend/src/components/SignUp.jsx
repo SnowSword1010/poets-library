@@ -14,8 +14,7 @@ function SignUp() {
             lastName: event.target.getElementsByClassName('form-row')[0].getElementsByClassName('col')[1].getElementsByClassName('form-control')[0].value,
             email: event.target.getElementsByClassName('form-group')[0].getElementsByClassName('form-control')[0].value,
             password: event.target.getElementsByClassName('form-group')[1].getElementsByClassName('form-control')[0].value,
-            data: {}
-        }
+            }
         axios.post("http://localhost:5000/signup", formData).then(response => {
             console.log(response);
             history.push('poetprofilecreation');

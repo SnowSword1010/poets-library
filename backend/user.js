@@ -23,8 +23,7 @@ const userSchema = mongoose.Schema({
     firstName: String,
     lastName: String,
     email: String,
-    password: String,
-    data: Array
+    password: String
 });
 
 // The alternative to the export model pattern is the export schema pattern.

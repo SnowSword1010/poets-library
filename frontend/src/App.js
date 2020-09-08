@@ -60,6 +60,12 @@ function App() {
             <Route exact path="/login">
               <Login></Login>
             </Route>
+            <Route exact path="/signup">
+              <SignUp></SignUp>
+            </Route>
+            <Route exact path="/poetprofilecreation">
+              <PenName></PenName>
+            </Route>
             <Route exact path="/">
               <Home></Home>
             </Route>
