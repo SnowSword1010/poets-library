@@ -53,16 +53,54 @@ const auth = (req, res, next) => {
     // getting the token out of the header
     // Our header is gonna have two attributes => the first is gonna be a BEARER
     // and the second one is gonna be our TOKEN.
+    console.log("Reached auth");
     const token = req.header("x-auth-token");
-    if (!token)
-        return res.status(401); // next would never be executed
+    if (!token){
+        console.log("Invalid token");
+        return res.status(401); }// next would never be executed
     const verified = jwt.verify(token, process.env.ACCESS_TOKEN_KEY);
-    if (!verified)
+    if (!verified){
         return res
             .status(401)
-            .json({ msg: "Token verification failed, authorisation denied." });
-    console.log(verified);
+            .json({ msg: "Token verification failed, authorisation denied." });}
+   else{
+        req.poet = verified.id;
+        next();
+   }
 };
+
+app.get("/poets", auth, async (req, res) => {
+    console.log("Reached /poets block");
+    const poet = await Poet.findById(req.poet);
+    res.json({
+        id: poet._id,
+        penName: poet.penName,
+        fName: poet.fName,
+        lName: poet.lName,
+        email: poet.email
+    });
+})
+
+app.post("/tokenIsValid", async (req, res) => {
+    try {
+        const token = req.header("x-auth-token");
+        if (!token) {
+            return res.json(false);
+        }
+        console.log(token);
+        const verified = jwt.verify(token, process.env.ACCESS_TOKEN_KEY);
+        if (!verified) {
+            return res.json(false);
+        }
+        const poet = await Poet.findById(verified.id);
+        if (!poet) {
+            return res.json(false);
+        }
+        return res.json(true);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
 
 app.post("/signup", function (req, res) {
     let newUser = new User({
@@ -167,35 +205,5 @@ app.post("/poetprofilecreation", (req, res) => {
         }
     })
 })
-
-app.get("/poets", auth, async (req, res) => {
-    console.log("Reached /poets block");
-    const poet = await Poet.findById(req.poet);
-    res.json({
-        id: poet._id,
-        penName: poet.penName,
-        fName: poet.fName,
-        lName: poet.lName,
-        email: poet.email
-    });
-})
-
-app.post("/tokenIsValid", async (req, res) => {
-    try {
-        console.log("Reached /tokenIsValid block");
-        const token = req.header("x-auth-token");
-        if (!token) return res.json(false);
-
-        const verified = jwt.verify(token, process.env.JWT_SECRET);
-        if (!verified) return res.json(false);
-
-        const poet = await Poet.findById(verified.id);
-        if (!poet) return res.json(false);
-
-        return res.json(true);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));

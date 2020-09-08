@@ -30,11 +30,10 @@ function App() {
       }
       // tokenRes is a boolean
       const tokenRes = await Axios.post("http://localhost:5000/tokenIsValid", null, { headers: { "x-auth-token": token } });
-
       if (tokenRes.data) {
         const poetRes = await Axios.get("http://localhost:5000/poets",
           {
-            headers: { "x-auth-token": token }
+            headers: { "x-auth-token": token },
           });
         setPoetData({
           token,
