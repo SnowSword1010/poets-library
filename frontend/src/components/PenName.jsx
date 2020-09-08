@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState, useContext } from "react";
 import axios from "axios";
+import UserContext from "./context/UserContext";
+import { useHistory } from "react-router-dom";
 
 function PenName(){
-
+    // Throught the useHistory library we can link to another router without explicitly doing so with the link tag.
+    let history = useHistory();
     function handleSubmitClick(event)
     {
         event.preventDefault();
@@ -12,6 +15,7 @@ function PenName(){
         axios.post("http://localhost:5000/poetprofilecreation", formData).then(response => {
             // To know more about axios, head over to the Login component
             console.log("Poet authenticated");
+            history.push("/");
         });
     }
 
