@@ -31,7 +31,7 @@ const poetconn = mongoose.createConnection('mongodb://localhost:27017/poetDB', {
 const draftconn = mongoose.createConnection('mongodb://localhost:27017/draftDB', { useNewUrlParser: true, useUnifiedTopology: true });
 const publishedconn = mongoose.createConnection('mongodb://localhost:27017/publishedDB', { useNewUrlParser: true, useUnifiedTopology: true });
 const commentconn = mongoose.createConnection('mongodb://localhost:27017/commentDB', { useNewUrlParser: true, useUnifiedTopology: true });
-const quoteconn = mongoose.createConnection('mongodb://localhost:27017/quoteDB', { useNewUrlParser: true, useUnifiedTopology: true });
+const quoteconn = mongoose.createConnection('mongodb://localhost:27017/quotesDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
 // MAKING MODELS FROM SCHEMAS DATABASE SCHEMAS OBTAINED
 const User = userconn.model("User", userSchema);
@@ -55,18 +55,20 @@ const auth = (req, res, next) => {
     // and the second one is gonna be our TOKEN.
     console.log("Reached auth");
     const token = req.header("x-auth-token");
-    if (!token){
+    if (!token) {
         console.log("Invalid token");
-        return res.status(401); }// next would never be executed
+        return res.status(401);
+    }// next would never be executed
     const verified = jwt.verify(token, process.env.ACCESS_TOKEN_KEY);
-    if (!verified){
+    if (!verified) {
         return res
             .status(401)
-            .json({ msg: "Token verification failed, authorisation denied." });}
-   else{
+            .json({ msg: "Token verification failed, authorisation denied." });
+    }
+    else {
         req.poet = verified.id;
         next();
-   }
+    }
 };
 
 app.get("/poets", auth, async (req, res) => {
@@ -203,6 +205,22 @@ app.post("/poetprofilecreation", (req, res) => {
         else {
             console.log("User Name already exits! Try a different one.");
         }
+    })
+})
+
+app.get("/quote", (req, res) => {
+    // Get the count of all quotes
+    Quote.countDocuments().exec(function (err, count) {
+
+        // Get a random entry
+        var random = Math.floor(Math.random() * count)
+
+        // Again query all users but only fetch one offset by our random #
+        Quote.findOne().skip(random).exec(
+            function (err, quoteObj) {
+                // Tada! random quoteObj
+                res.json(quoteObj);
+            })
     })
 })
 

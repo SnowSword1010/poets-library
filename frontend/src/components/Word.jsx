@@ -1,4 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import axios from "axios";
+import UserContext from "./context/UserContext";
+import { useHistory } from "react-router-dom";
+
 // import ArrowDownwardTwoToneIcon from './@material-ui/icons/ArrowDownwardTwoTone';
 
 // Word is the name of the functional compnent comprising of the input box (in which the user will input his desired word) and the submit button
