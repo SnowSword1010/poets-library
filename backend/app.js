@@ -49,6 +49,10 @@ const currentSignedUpUser = {
     password: null
 }
 
+// this piece of code is essential to run the findAndUpdateOne query.
+mongoose.set('useFindAndModify', false);
+
+
 const auth = (req, res, next) => {
     // getting the token out of the header
     // Our header is gonna have two attributes => the first is gonna be a BEARER
@@ -71,52 +75,25 @@ const auth = (req, res, next) => {
     }
 };
 
-app.get("/poets", auth, async (req, res) => {
-    console.log("Reached /poets block");
-    const poet = await Poet.findById(req.poet);
-    res.json({
-        id: poet._id,
-        penName: poet.penName,
-        fName: poet.fName,
-        lName: poet.lName,
-        email: poet.email
-    });
-})
-
-app.post("/tokenIsValid", async (req, res) => {
-    try {
-        const token = req.header("x-auth-token");
-        if (!token) {
-            return res.json(false);
-        }
-        console.log(token);
-        const verified = jwt.verify(token, process.env.ACCESS_TOKEN_KEY);
-        if (!verified) {
-            return res.json(false);
-        }
-        const poet = await Poet.findById(verified.id);
-        if (!poet) {
-            return res.json(false);
-        }
-        return res.json(true);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
+// POSTING ON SIGN UP PAGE
 app.post("/signup", function (req, res) {
+    // creating a user object based on information entered on the sign up page
     let newUser = new User({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
         password: req.body.password,
     });
+    // checking if the user is already registered on usersDB or not
     User.findOne({
         email: req.body.email
     }).then(user => {
+        // If user doesn't exist in usersDB
         if (!user) {
+            // hashing the password
             bcrypt.hash(req.body.password, 10, (err, hash) => {
                 newUser.password = hash
+                // Creating and saving the new user to usersDB
                 User.create(newUser)
                     .then(user => {
                         console.log("Successfully saved user to database.");
@@ -124,6 +101,7 @@ app.post("/signup", function (req, res) {
                         currentSignedUpUser.lastName = user.lastName;
                         currentSignedUpUser.email = user.email;
                         currentSignedUpUser.password = user.password;
+                        // Sends the signUp data to frontend
                         res.send({
                             isSignedUp: true,
                             userObj: user
@@ -140,6 +118,7 @@ app.post("/signup", function (req, res) {
     }).catch(err => console.log(err));
 });
 
+// POSTING ON LOGIN PAGE
 app.post('/login', async (req, res) => {
     User.findOne({
         email: req.body.email,
@@ -148,10 +127,15 @@ app.post('/login', async (req, res) => {
             if (bcrypt.compareSync(req.body.password, user.password)) {
                 // passwords match
                 console.log("Logged in");
+                // Gets the poet profile corressponding to the user
                 Poet.findOne({
                     email: req.body.email
                 }).then(poet => {
                     // poet authenticated
+
+                    // JSON web token consists of three parts separated by dots. It looks like xxxxx.yyyyy.zzzzz
+                    // 1st part - Header, 2nd part - Payload, 3rd part - Signature
+
                     // CREATING JSON WEB TOKEN
                     // First parameter => Payload => The thing we want to serialise
                     // Second parameter => Secret Key in order to serialise
@@ -177,6 +161,28 @@ app.post('/login', async (req, res) => {
     })
 }
 );
+
+
+app.post("/tokenIsValid", async (req, res) => {
+    try {
+        const token = req.header("x-auth-token");
+        if (!token) {
+            return res.json(false);
+        }
+        console.log(token);
+        const verified = jwt.verify(token, process.env.ACCESS_TOKEN_KEY);
+        if (!verified) {
+            return res.json(false);
+        }
+        const poet = await Poet.findById(verified.id);
+        if (!poet) {
+            return res.json(false);
+        }
+        return res.json(true);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
 
 app.post("/poetprofilecreation", (req, res) => {
     console.log("Posted penname");
@@ -223,5 +229,41 @@ app.get("/quote", (req, res) => {
             })
     })
 })
+
+app.get("/poets", auth, async (req, res) => {
+    console.log("Reached /poets block");
+    const poet = await Poet.findById(req.poet);
+    res.json({
+        id: poet._id,
+        penName: poet.penName,
+        fName: poet.fName,
+        lName: poet.lName,
+        email: poet.email
+    });
+})
+
+
+app.post("/newpoetry", async (req, res) => {
+    const data = {
+        penName: req.body.penName
+    }
+    Draft.findOneAndUpdate({ penName: req.body.penName })
+        .then(draft => {
+            if (!draft) {
+                Draft.create({ penName: req.body.penName, drafts: [{ draft_id: 1, draft_title: req.body.title, draft_content: req.body.poem}] })
+            }
+
+            // Omitting the extre arr varaible results in some sort of error
+            const arr = draft.drafts;
+            arr.push({ draft_id: arr.length + 1, draft_title: req.body.title, draft_content: req.body.poem});
+            console.log(arr);
+            draft.drafts = arr;
+            draft.save();
+        }
+        )
+        .catch(err => {
+            console.log(err);
+        })
+});
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));

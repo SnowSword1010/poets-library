@@ -20,12 +20,7 @@ app.use(express.json());
 
 const draftSchema = mongoose.Schema({
     penName: String,
-    drafts:
-    {
-        _draft_id: Number,
-        draft_title: String,
-        draft_content: String
-    }
+    drafts: Array
 })
 
 module.exports = draftSchema;
