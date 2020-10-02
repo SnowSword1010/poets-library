@@ -20,6 +20,10 @@ function RhymingTool() {
         // Updates the value of the array listOfRhymes to the rhyming words obtained.
         setRhymes(fetchedRhymes);
     }
+    function handleClick(e){
+        e.preventDefault();
+        console.log(e);
+    }
     return (
         poetData.poet ?
         <div>
@@ -28,7 +32,7 @@ function RhymingTool() {
                 //renderWords(listOfRhymes)
             }
             <div className="row">
-                {listOfRhymes.map((element) => <div className="col-lg-2"><RhymeCard name={element}></RhymeCard></div>)}
+                {listOfRhymes.map((element) => <div className="col-lg-2"><div onClick={handleClick}><RhymeCard name={element}></RhymeCard></div></div>)}
             </div>
         </div>
         :

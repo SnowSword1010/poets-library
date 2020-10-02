@@ -5,6 +5,8 @@ import { useHistory } from "react-router-dom";
 import LogInToContinue from "./LogInToContinue";
 import PoemCard from "./PoemCard";
 
+
+
 function MyPoetries() {
     const [listOfDrafts, setListOfDrafts] = useState([]);
     const [arr, setarr] = useState([]);
@@ -33,10 +35,14 @@ function MyPoetries() {
     }, [arr]);
     console.log(listOfDrafts);
 
+    function handleClick(e)
+    {
+        console.log(e);
+    }
 
     return (
         poetData.poet ?
-            <div><h2>{listOfDrafts.map(element => <div><PoemCard s_no={element.draft_id} title={element.draft_title} poem={element.draft_content}></PoemCard></div>)}</h2></div>
+            <div><h2>{listOfDrafts.map(element => <PoemCard s_no={element.draft_id} title={JSON.stringify(element.draft_title).split('\n').map(i => {return <p>{i}</p>})} poem={JSON.stringify(element.draft_content).split('\n').map(i => {return <p>{i}</p>})}></PoemCard>)}</h2></div>
             :
             <LogInToContinue></LogInToContinue>
     )

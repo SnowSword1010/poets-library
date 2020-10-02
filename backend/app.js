@@ -263,7 +263,6 @@ app.post("/newpoetry", async (req, res) => {
 });
 
 app.post("/mypoetries", async (req, res) => {
-    console.log("I'm called");
     Draft.findOne({ penName: req.body.penName })
         .then(draft => {
             res.send(draft.drafts);
@@ -276,6 +275,27 @@ app.post("/mypoetries", async (req, res) => {
 app.post("/currentLoggedInUser", async (req, res) => {
     console.log(req);
     res.json({status: "OK"});
+})
+
+app.get("/edit/:penName/:draft_id", async (req,res) => {
+    console.log(req.params);
+    Draft.findOne({ penName: req.params.penName })
+    .then(draft=>{
+        res.json(draft.drafts[req.params.draft_id - 1]);
+    })
+})
+
+app.post("/update/:penName/:draft_id", async (req,res) => {
+    Draft.findOneAndUpdate({penName: req.body.penName})
+    .then(draft => {
+        const arr = draft.drafts;
+        arr[req.params.draft_id - 1].draft_title = req.body.title;
+        arr[req.params.draft_id - 1].draft_content = req.body.poem;
+        draft.drafts = arr;
+        // This next line is used to save an array
+        draft.markModified('drafts');
+        draft.save();
+    })
 })
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));

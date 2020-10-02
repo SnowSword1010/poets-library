@@ -14,6 +14,7 @@ import PenName from './components/PenName';
 import UserContext from './components/context/UserContext';
 import MyPoetries from "./components/MyPoetries";
 import Quote from "./components/Quote";
+import EditDraft from "./components/EditDraft";
 import Axios from 'axios';
 
 function App() {
@@ -84,6 +85,7 @@ function App() {
             <Route exact path="/quote">
               <Quote pData={poetData}></Quote>
             </Route>
+            <Route exact path="/edit/:id"><EditDraft></EditDraft></Route> 
           </div>
         </UserContext.Provider>
       </Router>
