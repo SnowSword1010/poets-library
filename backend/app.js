@@ -57,7 +57,7 @@ const auth = (req, res, next) => {
     // getting the token out of the header
     // Our header is gonna have two attributes => the first is gonna be a BEARER
     // and the second one is gonna be our TOKEN.
-    console.log("Reached auth");
+    /* console.log("Reached auth"); */
     const token = req.header("x-auth-token");
     if (!token) {
         console.log("Invalid token");
@@ -74,6 +74,39 @@ const auth = (req, res, next) => {
         next();
     }
 };
+
+app.post("/tokenIsValid", async (req, res) => {
+    try {
+        const token = req.header("x-auth-token");
+        if (!token) {
+            return res.json(false);
+        }
+        /* console.log(token); */
+        const verified = jwt.verify(token, process.env.ACCESS_TOKEN_KEY);
+        if (!verified) {
+            return res.json(false);
+        }
+        const poet = await Poet.findById(verified.id);
+        if (!poet) {
+            return res.json(false);
+        }
+        return res.json(true);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.get("/poets", auth, async (req, res) => {
+    /* console.log("Reached /poets block"); */
+    const poet = await Poet.findById(req.poet);
+    res.json({
+        id: poet._id,
+        penName: poet.penName,
+        fName: poet.fName,
+        lName: poet.lName,
+        email: poet.email
+    });
+})
 
 // POSTING ON SIGN UP PAGE
 app.post("/signup", function (req, res) {
@@ -162,28 +195,6 @@ app.post('/login', async (req, res) => {
 }
 );
 
-
-app.post("/tokenIsValid", async (req, res) => {
-    try {
-        const token = req.header("x-auth-token");
-        if (!token) {
-            return res.json(false);
-        }
-        console.log(token);
-        const verified = jwt.verify(token, process.env.ACCESS_TOKEN_KEY);
-        if (!verified) {
-            return res.json(false);
-        }
-        const poet = await Poet.findById(verified.id);
-        if (!poet) {
-            return res.json(false);
-        }
-        return res.json(true);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
 app.post("/poetprofilecreation", (req, res) => {
     console.log("Posted penname");
     Poet.findOne({
@@ -230,32 +241,17 @@ app.get("/quote", (req, res) => {
     })
 })
 
-app.get("/poets", auth, async (req, res) => {
-    console.log("Reached /poets block");
-    const poet = await Poet.findById(req.poet);
-    res.json({
-        id: poet._id,
-        penName: poet.penName,
-        fName: poet.fName,
-        lName: poet.lName,
-        email: poet.email
-    });
-})
-
 
 app.post("/newpoetry", async (req, res) => {
-    const data = {
-        penName: req.body.penName
-    }
     Draft.findOneAndUpdate({ penName: req.body.penName })
         .then(draft => {
             if (!draft) {
-                Draft.create({ penName: req.body.penName, drafts: [{ draft_id: 1, draft_title: req.body.title, draft_content: req.body.poem}] })
+                Draft.create({ penName: req.body.penName, drafts: [{ draft_id: 1, draft_title: req.body.title, draft_content: req.body.poem }] })
             }
 
             // Omitting the extre arr varaible results in some sort of error
             const arr = draft.drafts;
-            arr.push({ draft_id: arr.length + 1, draft_title: req.body.title, draft_content: req.body.poem});
+            arr.push({ draft_id: arr.length + 1, draft_title: req.body.title, draft_content: req.body.poem });
             console.log(arr);
             draft.drafts = arr;
             draft.save();
@@ -265,5 +261,21 @@ app.post("/newpoetry", async (req, res) => {
             console.log(err);
         })
 });
+
+app.post("/mypoetries", async (req, res) => {
+    console.log("I'm called");
+    Draft.findOne({ penName: req.body.penName })
+        .then(draft => {
+            res.send(draft.drafts);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+})
+
+app.post("/currentLoggedInUser", async (req, res) => {
+    console.log(req);
+    res.json({status: "OK"});
+})
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));

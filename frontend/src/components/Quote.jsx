@@ -4,9 +4,9 @@ import UserContext from "./context/UserContext";
 import { useHistory } from "react-router-dom";
 import Continue from "./LogInToContinue";
 
-function Quote() {
+function Quote(props) {
 
-    const { poetData } = useContext(UserContext);
+    const { poetData, setPoetData } = useContext(UserContext);
     const history = useHistory();
     const [quoteObj, setQuoteObj] = useState({
         _id: undefined,
@@ -17,9 +17,10 @@ function Quote() {
     useEffect(() => {
 
         const abortController = new AbortController();
-        const signal = abortController.signal
-
-        axios.get("http://localhost:5000/quote", {signal: signal}).then(response => {
+        const signal = abortController.signal;
+        console.log("Hello");
+        console.log(props.pData);
+        axios.get("http://localhost:5000/quote", { signal: signal }).then(response => {
             setQuoteObj({
                 _id: response.data._id,
                 author: response.data.author,

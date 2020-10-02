@@ -24,6 +24,7 @@ function App() {
   });
 
   useEffect(() => {
+    console.log("called");
     const checkLoggedIn = async () => {
       let token = localStorage.getItem("auth-token");
       if (token === null) {
@@ -81,7 +82,7 @@ function App() {
               <MyPoetries></MyPoetries>
             </Route>
             <Route exact path="/quote">
-              <Quote></Quote>
+              <Quote pData={poetData}></Quote>
             </Route>
           </div>
         </UserContext.Provider>
