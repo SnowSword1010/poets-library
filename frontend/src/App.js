@@ -15,6 +15,7 @@ import UserContext from './components/context/UserContext';
 import MyPoetries from "./components/MyPoetries";
 import Quote from "./components/Quote";
 import EditDraft from "./components/EditDraft";
+import PublishMessage from "./components/PublishMessage";
 import Axios from 'axios';
 
 function App() {
@@ -49,46 +50,51 @@ function App() {
   }, []);
 
 
-    return (
-      <Router>
-        {/* ANYTHING IN THE VALUE ATTRIBUTE OF UserContext.Provider could be 
+  return (
+    <Router>
+      {/* ANYTHING IN THE VALUE ATTRIBUTE OF UserContext.Provider could be 
         accessed by all of the components inside it 
         Here it stores the value of the state contatining the currently logged in
         user */}
-        <UserContext.Provider value={{ poetData, setPoetData }}>
-          <div>
-            <div className="App">
-              <Heading></Heading>
-            </div>
-            <Navbar></Navbar>
-            <Route exact path="/login">
-              <Login></Login>
-            </Route>
-            <Route exact path="/signup">
-              <SignUp></SignUp>
-            </Route>
-            <Route exact path="/poetprofilecreation">
-              <PenName></PenName>
-            </Route>
-            <Route exact path="/">
-              <Home></Home>
-            </Route>
-            <Route exact path="/rhymingtool">
-              <RhymingTool></RhymingTool>
-            </Route>
-            <Route exact path="/newpoetry">
-              <NewPoetry></NewPoetry>
-            </Route>
-            <Route exact path="/mypoetries">
-              <MyPoetries></MyPoetries>
-            </Route>
-            <Route exact path="/quote">
-              <Quote pData={poetData}></Quote>
-            </Route>
-            <Route exact path="/edit/:id"><EditDraft></EditDraft></Route> 
+      <UserContext.Provider value={{ poetData, setPoetData }}>
+        <div>
+          <div className="App">
+            <Heading></Heading>
           </div>
-        </UserContext.Provider>
-      </Router>
-    )
+          <Navbar></Navbar>
+          <Route exact path="/login">
+            <Login></Login>
+          </Route>
+          <Route exact path="/signup">
+            <SignUp></SignUp>
+          </Route>
+          <Route exact path="/poetprofilecreation">
+            <PenName></PenName>
+          </Route>
+          <Route exact path="/">
+            <Home></Home>
+          </Route>
+          <Route exact path="/rhymingtool">
+            <RhymingTool></RhymingTool>
+          </Route>
+          <Route exact path="/newpoetry">
+            <NewPoetry></NewPoetry>
+          </Route>
+          <Route exact path="/mypoetries">
+            <MyPoetries></MyPoetries>
+          </Route>
+          <Route exact path="/quote">
+            <Quote pData={poetData}></Quote>
+          </Route>
+          <Route exact path="/edit/:id">
+            <EditDraft></EditDraft>
+          </Route>
+          <Route exact path="/publish/:id">
+            <PublishMessage></PublishMessage>
+          </Route>
+        </div>
+      </UserContext.Provider>
+    </Router>
+  )
 }
 export default App;

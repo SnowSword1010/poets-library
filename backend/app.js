@@ -274,28 +274,49 @@ app.post("/mypoetries", async (req, res) => {
 
 app.post("/currentLoggedInUser", async (req, res) => {
     console.log(req);
-    res.json({status: "OK"});
+    res.json({ status: "OK" });
 })
 
-app.get("/edit/:penName/:draft_id", async (req,res) => {
+app.get("/edit/:penName/:draft_id", async (req, res) => {
     console.log(req.params);
     Draft.findOne({ penName: req.params.penName })
-    .then(draft=>{
-        res.json(draft.drafts[req.params.draft_id - 1]);
-    })
+        .then(draft => {
+            res.json(draft.drafts[req.params.draft_id - 1]);
+        })
 })
 
-app.post("/update/:penName/:draft_id", async (req,res) => {
-    Draft.findOneAndUpdate({penName: req.body.penName})
-    .then(draft => {
-        const arr = draft.drafts;
-        arr[req.params.draft_id - 1].draft_title = req.body.title;
-        arr[req.params.draft_id - 1].draft_content = req.body.poem;
-        draft.drafts = arr;
-        // This next line is used to save an array
-        draft.markModified('drafts');
-        draft.save();
-    })
+app.post("/update/:penName/:draft_id", async (req, res) => {
+    Draft.findOneAndUpdate({ penName: req.body.penName })
+        .then(draft => {
+            const arr = draft.drafts;
+            arr[req.params.draft_id - 1].draft_title = req.body.title;
+            arr[req.params.draft_id - 1].draft_content = req.body.poem;
+            draft.drafts = arr;
+            // This next line is used to save an array
+            draft.markModified('drafts');
+            draft.save();
+        })
+})
+
+app.get("/publish/:penName/:draft_id", async (req, res) => {
+    console.log(req.params);
+    Draft.findOne({ penName: req.params.penName })
+        .then(draft => {
+            // console.log(draft.drafts[req.params.draft_id - 1]); gives an obj with draft_id, draft_title and draft_content
+            // _poetry_id, poetry_title, poetry_content, poet_name
+            Published.count({}, function (err, count) {
+                const obj = {
+                    _poetry_id: count+1,
+                    poetry_title: draft.drafts[req.params.draft_id - 1].draft_title,
+                    poetry_content: draft.drafts[req.params.draft_id - 1].draft_content,
+                    poet_name: req.params.penName
+                }
+                Published.create(obj);
+            })
+        })
+        .catch(err => {
+            console.log(err);
+        })
 })
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));

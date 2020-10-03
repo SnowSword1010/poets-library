@@ -8,6 +8,7 @@ export default function PoemCard(props){
     return (
         <div>
             <Link to={"/edit/"+props.s_no}>Edit</Link>
+            <Link to={"/publish/"+props.s_no}>Publish</Link>
             <h4>{props.title}</h4>
             <p>{props.poem}</p>
         </div>
