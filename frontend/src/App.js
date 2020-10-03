@@ -16,6 +16,7 @@ import MyPoetries from "./components/MyPoetries";
 import Quote from "./components/Quote";
 import EditDraft from "./components/EditDraft";
 import PublishMessage from "./components/PublishMessage";
+import Published from "./components/Published";
 import Axios from 'axios';
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
       }
     }
     checkLoggedIn();
+
   }, []);
 
 
@@ -91,6 +93,9 @@ function App() {
           </Route>
           <Route exact path="/publish/:id">
             <PublishMessage></PublishMessage>
+          </Route>
+          <Route exact path="/published">
+            <Published></Published>
           </Route>
         </div>
       </UserContext.Provider>

@@ -319,4 +319,12 @@ app.get("/publish/:penName/:draft_id", async (req, res) => {
         })
 })
 
+app.get("/published", async (req, res) => {
+    Published.find({})
+    .then(publishedDrafts => {
+        console.log(publishedDrafts);
+        res.send(publishedDrafts);
+    })
+})
+
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));

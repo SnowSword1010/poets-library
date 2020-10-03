@@ -10,11 +10,11 @@ function Navbar() {
 
     function handleLogoutClick() {
         setPoetData({
-          token: undefined,
-          poet: undefined,
+            token: undefined,
+            poet: undefined,
         });
         localStorage.setItem("auth-token", "");
-      }
+    }
 
     // The UserReg function is primarily used to render suitable Login Pages based on whether the user is logged in or not.
     function UserReg() {
@@ -49,20 +49,19 @@ function Navbar() {
                         <a className="nav-link" href="#">Link</a>
                     </li>
                     <li className="nav-item">
-                        {/* <a className="nav-link" href="#rhymes" onClick={props.handleClick} name="rhyme">Rhyming Tool</a> */}
                         <Link to="/rhymingtool" className="nav-link" name="Rhyming Tool">Rhyming Tool</Link>
                     </li>
                     <li className="nav-item">
-                        {/* <a className="nav-link" href="#" onClick={props.handleClick} name="New Poem">New Poem</a> */}
                         <Link to="/newpoetry" className="nav-link" name="New Poem">New Poem</Link>
                     </li>
                     <li className="nav-item">
-                        {/* <a className="nav-link" href="#" onClick={props.handleClick} name="Saved Poetries">Saved Poetries</a> */}
                         <Link to="/mypoetries" className="nav-link" name="My Poetries">My Poetries</Link>
                     </li>
                     <li className="nav-item">
-                        {/* <a className="nav-link" href="#" onClick={props.handleClick} name="quote">Gimme a Quote!</a> */}
                         <Link to="/quote" className="nav-link" name="Quote">Gimme a Quote!</Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link to="/published" className="nav-link" name="Published">Published</Link>
                     </li>
                 </ul>
                 <UserReg></UserReg>
