@@ -33,12 +33,8 @@ function MyPoetries() {
             setarr([1]);
         }
     }, [arr]);
-    console.log(listOfDrafts);
 
-    function handleClick(e)
-    {
-        console.log(e);
-    }
+    console.log(listOfDrafts);
 
     return (
         poetData.poet ?

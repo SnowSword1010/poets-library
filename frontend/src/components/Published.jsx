@@ -11,7 +11,6 @@ function Published() {
     useEffect(() => {
         axios.get("http://localhost:5000/published")
             .then(response => {
-                console.log(response.data);
                 setPublishedPoetries(response.data);
             })
             .catch(err => {
@@ -19,8 +18,6 @@ function Published() {
             })
     }, [])
 
-    console.log(publishedPoetries);
-
-    return (<h1>{publishedPoetries.map(element => { return (<PublishedPoemCard id={element._poetry_id} title={element.poetry_title} poem={element.poetry_content} penName={element.poet_name}></PublishedPoemCard>) })}</h1>)
+    return (<h1>{publishedPoetries.map(element => { return (<PublishedPoemCard id={element.poetry_id} title={element.poetry_title} poem={element.poetry_content} penName={element.poet_name}></PublishedPoemCard>) })}</h1>)
 }
 export default Published;

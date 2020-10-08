@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 export default function PublishedPoemCard(props){
     return (
         <div>
-            <Link to={"/show/"+props.s_no}>Show</Link>
+            <Link to={"/show/"+props.id}>Show</Link>
             <h4>{props.title}</h4>
             <p>{props.poem}</p>
             <p>-{props.penName}</p>

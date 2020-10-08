@@ -19,7 +19,7 @@ app.use(express.json());
 // ***************************************************************** //
 
 const publishedSchema = mongoose.Schema({
-    _poetry_id: Number,
+    poetry_id: Number,
     poetry_title: String,
     poetry_content: String,
     poet_name: String

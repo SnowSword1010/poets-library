@@ -303,10 +303,10 @@ app.get("/publish/:penName/:draft_id", async (req, res) => {
     Draft.findOne({ penName: req.params.penName })
         .then(draft => {
             // console.log(draft.drafts[req.params.draft_id - 1]); gives an obj with draft_id, draft_title and draft_content
-            // _poetry_id, poetry_title, poetry_content, poet_name
+            // poetry_id, poetry_title, poetry_content, poet_name
             Published.count({}, function (err, count) {
                 const obj = {
-                    _poetry_id: count+1,
+                    poetry_id: count + 1,
                     poetry_title: draft.drafts[req.params.draft_id - 1].draft_title,
                     poetry_content: draft.drafts[req.params.draft_id - 1].draft_content,
                     poet_name: req.params.penName
@@ -321,10 +321,60 @@ app.get("/publish/:penName/:draft_id", async (req, res) => {
 
 app.get("/published", async (req, res) => {
     Published.find({})
-    .then(publishedDrafts => {
-        console.log(publishedDrafts);
-        res.send(publishedDrafts);
-    })
+        .then(publishedDrafts => {
+            res.send(publishedDrafts);
+        })
+})
+
+app.get("/show/:id", async (req, res) => {
+    Published.find({ poetry_id: req.params.id })
+        .then(poetry => res.send(poetry));
+})
+
+app.post("/comment/:id", async (req, res) => {
+    const obj = {
+        poetry_id: req.params.id,
+        comments: [
+            {
+                commenter: req.body.commenterName,
+                comment: req.body.comment,
+                replies: []
+            }
+        ]
+    }
+    Comment.findOne({ poetry_id: obj.poetry_id })
+        .then(object => {
+            if (!object) {
+                Comment.create(obj);
+            }
+            else {
+                let arr = object.comments;
+                arr.push({
+                    commenter: req.body.commenterName,
+                    comment: req.body.comment,
+                    replies: []
+                })
+                object.comments = arr;
+                object.save();
+                res.json(object);
+            }
+        })
+})
+
+app.get("/comments/:id", async (req, res) => {
+    Comment.findOne({ poetry_id: req.params.id })
+        .then(comments => {
+            if (!comments) {
+                console.log("No comments");
+                // res.json("No comments");
+            }
+            console.log(comments);
+            res.json(comments);
+        })
+})
+
+app.post("/replies", async (req, res) => {
+    console.log(req.body);
 })
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));
