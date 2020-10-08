@@ -17,6 +17,7 @@ import Quote from "./components/Quote";
 import EditDraft from "./components/EditDraft";
 import PublishMessage from "./components/PublishMessage";
 import Published from "./components/Published";
+import ShowPublishedPoetry from "./components/ShowPublishedPoetry";
 import Axios from 'axios';
 
 function App() {
@@ -27,7 +28,6 @@ function App() {
   });
 
   useEffect(() => {
-    console.log("called");
     const checkLoggedIn = async () => {
       let token = localStorage.getItem("auth-token");
       if (token === null) {
@@ -96,6 +96,9 @@ function App() {
           </Route>
           <Route exact path="/published">
             <Published></Published>
+          </Route>
+          <Route exact path="/show/:id">
+            <ShowPublishedPoetry></ShowPublishedPoetry>
           </Route>
         </div>
       </UserContext.Provider>

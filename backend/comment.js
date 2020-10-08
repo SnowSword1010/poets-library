@@ -19,10 +19,30 @@ app.use(express.json());
 // ***************************************************************** //
 
 const commentSchema = mongoose.Schema({
-    _poetry_id: Number,
-    commenter: String,
-    new: String,
-    reply: String
+    poetry_id: Number,
+    comments: [
+        {
+            commenter: String,
+                comment: String,
+                replies: [
+                    {
+                        replier_penName: String,
+                        reply: String
+                    }
+                ]
+        }
+    ]
 })
+
+// comments = {
+//     commenter: String,
+//     comment: String,
+//     replies: [
+//         {
+//             replier_penName: String,
+//             reply: String
+//         }
+//     ]
+// }
 
 module.exports = commentSchema;
