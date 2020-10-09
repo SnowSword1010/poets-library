@@ -1,10 +1,10 @@
-* {
+/* * {
   padding: 0;
   margin: 0;
-}
+} */
 
 body {
-  background-color: #f9f9f9;
+  background-color: #f7e8f0;
 }
 
 .wordForm {
@@ -12,7 +12,14 @@ body {
   font-size: xx-large;
 }
 
+.bulb-icon {
+  color: palevioletred;
+  background-color: #f7e8f0;
+  border: none;
+}
+
 .inputWord {
+  background-color: #f7e8f0;
   border-top-style: hidden;
   border-right-style: hidden;
   border-left-style: hidden;
@@ -41,3 +48,78 @@ body {
 .rhymeCard:hover {
   background-color: #ffacb7;
 }
+
+.heading {
+  text-align: center;
+  font-family: "Parisienne", cursive;
+  font-size: x-large;
+}
+
+.navbar-greeting {
+  color: white;
+  margin: 0 2em 0 2em;
+  font-family: "Dancing Script", cursive;
+}
+
+.svg-imgs {
+  width: 40px;
+  height: 30px;
+}
+
+.svg-imgs-div {
+  display: inline-block;
+  width: 40px;
+  height: 30px;
+}
+
+.nav-text-beside-svg {
+  display: inline;
+  position: relative;
+  bottom: 0.5em;
+}
+
+.heading-text {
+  display: inline;
+}
+
+.custom-nav-style {
+  background-color: #1a1c20;
+}
+
+/******* NEW POETRY COMPONENT ******/
+
+.new-poetry-heading {
+  text-align: center;
+  font-family: 'Arapey', serif;
+}
+
+.new-poetry-form {
+  text-align: center;
+  margin: 0 auto;
+  width: 50%;
+}
+
+.new-poetry-form-title {
+  text-align: center;
+  margin: 0 auto;
+  width: 50%;
+  border: hidden;
+}
+
+/* removes outline from textbozx after the user clicks on it */
+.new-poetry-form-title:focus {
+  outline: none !important;
+  box-shadow: none;
+}
+
+.new-poetry-form-content {
+  border: hidden;
+  margin: 2% 0;
+}
+
+.new-poetry-form-content:focus {
+  outline: none !important;
+  box-shadow: none;
+}
+
+/*********************************/

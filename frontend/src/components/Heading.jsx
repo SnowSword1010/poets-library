@@ -3,8 +3,13 @@ import ReactDOM from 'react-dom';
 
 function Heading() {
     return (
-        <header className="App-header">
-            <h1>sollicitudin nibh sit amet commodo</h1>
+        <header className="heading">
+            <h1 className = "heading-text">Poets Library</h1>
+            <div className="svg-imgs-div">
+                <svg class="icon svg-imgs">
+                    <use xlinkHref="icons/Mycollection-SVG-sprite.svg#feather" />
+                </svg>
+            </div>
         </header>
     )
 }

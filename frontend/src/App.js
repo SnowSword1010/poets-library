@@ -60,9 +60,7 @@ function App() {
         user */}
       <UserContext.Provider value={{ poetData, setPoetData }}>
         <div>
-          <div className="App">
-            <Heading></Heading>
-          </div>
+          <Heading></Heading>
           <Navbar></Navbar>
           <Route exact path="/login">
             <Login></Login>

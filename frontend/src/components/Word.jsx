@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import axios from "axios";
 import UserContext from "./context/UserContext";
 import { useHistory } from "react-router-dom";
+import { FaLightbulb } from "react-icons/fa";
 
 // import ArrowDownwardTwoToneIcon from './@material-ui/icons/ArrowDownwardTwoTone';
 
@@ -12,7 +13,7 @@ function Word(props) {
     const [word, setWord] = useState({
         // the object word constains a property called value which is intialised to an empty string
         value: ""
-    });    
+    });
 
     // The function handleChange takes care of change of values in the input field and updates it accordingly
     function handleChange(event) {
@@ -24,12 +25,12 @@ function Word(props) {
 
         // The constant inputWord stores the word inputted by the user in the textbox
         const inputWord = event.target.getElementsByClassName('inputWord').word.value;
-        
+
         // The variable rhymingWords stores the 
         // let rhymingWords = [];
         // *********************** API REQUEST TO RAPID API **************************** //
-        
-        fetch("https://wordsapiv1.p.rapidapi.com/words/"+inputWord+"/rhymes", {
+
+        fetch("https://wordsapiv1.p.rapidapi.com/words/" + inputWord + "/rhymes", {
             "method": "GET",
             "headers": {
                 "x-rapidapi-host": "wordsapiv1.p.rapidapi.com",
@@ -46,16 +47,16 @@ function Word(props) {
                 console.log(err);
             });
         // **************************************************************************** //
-        
+
         // The default action after submitting a form is to reload the page. The preventDefault method prevents that.
         event.preventDefault();
     }
 
     return (
         <div>
-            <form className = "wordForm" onSubmit={handleSubmit}>
-                <input className = "inputWord" name="word" onChange={handleChange} placeholder="I want rhyming words for"></input>
-                <button type="submit">{/* <ArrowDownwardTwoToneIcon /> */} Submit</button>
+            <form className="wordForm" onSubmit={handleSubmit}>
+                <input className="inputWord" name="word" onChange={handleChange} placeholder="I want rhyming words for"></input>
+                <button type="submit" className="bulb-icon">{/* <ArrowDownwardTwoToneIcon /> */} <FaLightbulb className = "bulb-icon"></FaLightbulb></button>
             </form>
         </div>
     )
