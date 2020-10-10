@@ -90,7 +90,7 @@ body {
 
 .new-poetry-heading {
   text-align: center;
-  font-family: 'Arapey', serif;
+  font-family: "Arapey", serif;
 }
 
 .new-poetry-form {
@@ -120,6 +120,41 @@ body {
 .new-poetry-form-content:focus {
   outline: none !important;
   box-shadow: none;
+}
+
+/*********************************/
+
+/*********** POEM CARD ***********/
+
+.poem-card {
+  width: 50%;
+  margin: auto 50% 2em 25%;
+  text-align: center;
+}
+
+.poem-card-title{
+  text-align: center;
+}
+
+.poem-card-textarea {
+  background-color: #f7e8f0;
+  text-align: center;
+  width: 60%;
+  font-size: large;
+  resize: none;
+  overflow: hidden;
+  border: none;
+}
+
+
+.poem-card-buttons-edit {
+  background-color: pink;
+  float: left;
+}
+
+.poem-card-buttons-publish {
+  background-color: pink;
+  float: right;
 }
 
 /*********************************/

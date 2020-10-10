@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import Heading from "./components/Heading";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";

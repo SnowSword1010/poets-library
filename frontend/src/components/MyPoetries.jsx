@@ -38,7 +38,7 @@ function MyPoetries() {
 
     return (
         poetData.poet ?
-            <div><h2>{listOfDrafts.map(element => <PoemCard penName={poetData.poet.penName} s_no={element.draft_id} title={JSON.stringify(element.draft_title).split('\n').map(i => {return <p>{i}</p>})} poem={JSON.stringify(element.draft_content).split('\n').map(i => {return <p>{i}</p>})}></PoemCard>)}</h2></div>
+            <div><h2>{listOfDrafts.map(element => <PoemCard penName={poetData.poet.penName} s_no={element.draft_id} title={element.draft_title} poem={element.draft_content}></PoemCard>)}</h2></div>
             :
             <LogInToContinue></LogInToContinue>
     )

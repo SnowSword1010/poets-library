@@ -374,7 +374,20 @@ app.get("/comments/:id", async (req, res) => {
 })
 
 app.post("/replies", async (req, res) => {
-    console.log(req.body);
+    const reply = {
+        replier_penName: req.body.penName,
+        reply: req.body.reply
+    }
+    Comment.findOne({ poetry_id: req.body.poetryId })
+        .then(poetry => {
+            poetry.comments.filter(obj => {
+                if(obj._id == req.body.commentId){
+                    obj.replies.push(reply);
+                    console.log(obj);
+                    poetry.save();
+                }
+            })
+        })
 })
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));

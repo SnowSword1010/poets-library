@@ -56,7 +56,7 @@ export default function ShowPublishedPoetry() {
                 <textarea className="form-control" id="exampleFormControlTextarea1" rows="5" placeholder="Write a comment"></textarea>
                 <button type="submit" class="btn btn-dark mb-2">Post</button>
             </form>
-            <div>{comments.map(element => { return (<Comment commentId={element._id} commenter={element.commenter} comment={element.comment} replies={element.replies}></Comment>) })}</div>
+            <div>{comments.map((element, idx) => { return (<Comment idx = {idx} commentId={element._id} commenter={element.commenter} comment={element.comment} replies={element.replies}></Comment>) })}</div>
         </div>
     )
 }

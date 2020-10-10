@@ -10,10 +10,12 @@ export default function Comment(props) {
         event.preventDefault();
         event.persist();
         const data = {
+            poetryId: window.location.pathname.split('/')[2],
             commentId: props.commentId,
             penName: poetData.poet.penName,
             reply: event.target.getElementsByClassName('reply-box-pop-up')[0].getElementsByClassName('form-control')[0].value
         }
+        console.log(data);
         axios.post("http://localhost:5000/replies", data)
             .then(response => {
                 console.log(response);
@@ -21,7 +23,7 @@ export default function Comment(props) {
     }
 
     function showReplyBox() {
-        document.getElementById("reply-box-pop-up").innerHTML = "<textarea cols = '2' rows = '2' name='text' id='text_id' class='form-control' style='resize:vertical' ></textarea><button>Post</button>";
+        document.getElementsByClassName("reply-box-pop-up")[props.idx].innerHTML = "<textarea cols = '2' rows = '2' name='text' id='text_id' class='form-control' style='resize:vertical' ></textarea><button>Post</button>";
     }
 
     return (
