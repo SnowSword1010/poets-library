@@ -25,15 +25,14 @@ export default function ShowPublishedPoetry() {
     useEffect(() => {
         axios.get("http://localhost:5000/comments/" + poetry_id)
             .then(response => {
-                if(!response.data){
+                if (!response.data) {
                     setComments([]);
                 }
-                else
-                {
+                else {
                     setComments(response.data.comments);
                 }
             })
-    },[])
+    }, [])
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -46,17 +45,19 @@ export default function ShowPublishedPoetry() {
         axios.post("http://localhost:5000/comment/" + poetry_id, commentData)
             .then(response => setComments(response.data.comments));
     }
-    console.log(comments);
+    // const textAreaRows = poemContent.split("\n").length;
     return (
         <div>
-            <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="Title" value={poemTitle}></input>
-            <textarea className="form-control" id="exampleFormControlTextarea1" rows="50" placeholder="content" value={poemContent}></textarea>
-            <p>-{poet}</p>
+            <div className="new-poetry-form">
+                <input type="text" className="form-control new-poetry-form-title" id="exampleFormControlInput1" placeholder="Title" value={poemTitle} readOnly></input>
+                <h5 className="show-published-poetry-poet-name">~{poet}</h5>
+                <textarea className="form-control new-poetry-form-content" id="exampleFormControlTextarea1" rows="50" placeholder="content" value={poemContent} readOnly></textarea>
+            </div>
             <form onSubmit={handleSubmit}>
                 <textarea className="form-control" id="exampleFormControlTextarea1" rows="5" placeholder="Write a comment"></textarea>
                 <button type="submit" class="btn btn-dark mb-2">Post</button>
             </form>
-            <div>{comments.map((element, idx) => { return (<Comment idx = {idx} commentId={element._id} commenter={element.commenter} comment={element.comment} replies={element.replies}></Comment>) })}</div>
+            <div>{comments.map((element, idx) => { return (<Comment idx={idx} commentId={element._id} commenter={element.commenter} comment={element.comment} replies={element.replies}></Comment>) })}</div>
         </div>
     )
 }

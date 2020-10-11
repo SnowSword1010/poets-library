@@ -104,6 +104,7 @@ body {
   margin: 0 auto;
   width: 50%;
   border: hidden;
+  background-color: white !important;
 }
 
 /* removes outline from textbozx after the user clicks on it */
@@ -115,6 +116,7 @@ body {
 .new-poetry-form-content {
   border: hidden;
   margin: 2% 0;
+  background-color: white !important;
 }
 
 .new-poetry-form-content:focus {
@@ -158,3 +160,7 @@ body {
 }
 
 /*********************************/
+
+.show-published-poetry-poet-name {
+  float: right;
+}

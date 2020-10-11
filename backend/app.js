@@ -390,4 +390,15 @@ app.post("/replies", async (req, res) => {
         })
 })
 
+app.post("/showReplies", async (req,res) => {
+    Comment.findOne({ poetry_id: req.body.poetryId })
+        .then(poetry => {
+            poetry.comments.filter(obj => {
+                if(obj._id == req.body.commentId){
+                    res.json(obj.replies);
+                }
+            })
+        })
+})
+
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));

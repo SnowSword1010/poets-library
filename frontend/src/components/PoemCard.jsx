@@ -7,13 +7,12 @@ import Card from 'react-bootstrap/Card'
 
 export default function PoemCard(props) {
     const maxTextAreaLength = 100
-    const state = props.poem.slice(0, 100);
+    const state = props.poem.slice(0, maxTextAreaLength-3);
     console.log(state);
     return (
         <div className="poem-card">
             <h2 className="poem-card-title">{props.title}</h2>
-            <textarea value={state} rows="5" className="poem-card-textarea" maxLength="100"></textarea>
-            <Card></Card>
+            <textarea value={state + "..."} rows="5" className="poem-card-textarea" maxLength={maxTextAreaLength} readOnly></textarea>
             <div className="">
                 <Link to={"/edit/" + props.s_no}><button type="button" className="btn btn-lg poem-card-buttons-edit">Edit</button></Link>
                 <Link to={"/publish/" + props.s_no}><button type="button" className="btn btn-lg poem-card-buttons-publish">Publish</button></Link>
