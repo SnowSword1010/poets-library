@@ -1,17 +1,61 @@
-/* * {
-  padding: 0;
-  margin: 0;
-} */
-
 body {
   background-color: #f7e8f0;
 }
+
+.home {
+  background-color: #f7e8f0;
+}
+
+.penNameButton {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  margin-left: 50%;
+  color: #1a1c20;
+}
+
+.penName {
+  background-color: #f7e8f0;
+  border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style: hidden;
+  text-align: center;
+  display: inline-block;
+  margin: 3% 0 2%;
+}
+
+.penName:focus,
+:active {
+  background: transparent;
+}
+
+/********* LITERARY TOOLBOX **********/
+
+.literaryToolboxButtons {
+  background-color: #1a1c20;
+  color: white;
+  margin-left: 35%;
+}
+
+.literaryToolboxButtons1,
+.literaryToolboxButtons3 {
+  margin-top: 60%;
+}
+
+.literaryToolboxButtons2 {
+  margin-top: 5%;
+}
+
+/*************************************/
 
 .wordForm {
   text-align: center;
   font-size: xx-large;
 }
-
 .bulb-icon {
   color: palevioletred;
   background-color: #f7e8f0;
@@ -28,7 +72,7 @@ body {
   margin: 3% 0 2%;
 }
 
-/* removes outline from textbozx after the user clicks on it */
+/* removes outline from textbox after the user clicks on it */
 .inputWord:focus {
   outline: none;
 }
@@ -48,6 +92,35 @@ body {
 .rhymeCard:hover {
   background-color: #ffacb7;
 }
+
+/********** DEFINITION TOOL ********************/
+
+.definitionCard {
+  margin-bottom: 2%;
+  margin-left: 5%;
+}
+
+.definitionCardNumber {
+  display: inline-block;
+  font-family: "Josefin Slab", serif;
+  font-weight: 600;
+}
+
+.definitionCardPartOfSpeech {
+  display: inline-block;
+  padding-left: 1%;
+  font-family: "Josefin Slab", serif;
+  font-size: larger;
+  font-weight: 600;
+}
+
+.definitionCardDefinition {
+  font-family: "Slabo 27px", serif;
+  padding-left: 1.5%;
+  font-size: xx-large;
+}
+
+/***********************************************/
 
 .heading {
   text-align: center;
@@ -129,34 +202,47 @@ body {
 /*********** POEM CARD ***********/
 
 .poem-card {
-  width: 50%;
-  margin: auto 50% 2em 25%;
-  text-align: center;
+  margin-right: 50%;
+  margin-left: 10%;
 }
 
-.poem-card-title{
-  text-align: center;
+.poem-card-title {
+  text-align: left;
+  display: inline-block;
 }
 
 .poem-card-textarea {
   background-color: #f7e8f0;
-  text-align: center;
-  width: 60%;
-  font-size: large;
+  font-family: "Raleway", sans-serif;
+  font-size: x-large;
   resize: none;
   overflow: hidden;
   border: none;
+  outline: none;
 }
 
-
 .poem-card-buttons-edit {
-  background-color: pink;
-  float: left;
+  color: #ff2e63;
+  text-align: left;
+  margin-left: 45%;
+}
+
+.poem-card-buttons-delete {
+  color: #010a43;
+  margin-left: 3%;
 }
 
 .poem-card-buttons-publish {
-  background-color: pink;
-  float: right;
+  color: #6a65d8;
+  margin-left: 3%;
+}
+
+.hey {
+  display: inline;
+}
+
+.poem-card-textarea-div {
+  text-align: left;
 }
 
 /*********************************/
@@ -164,3 +250,159 @@ body {
 .show-published-poetry-poet-name {
   float: right;
 }
+
+.c {
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  position: absolute;
+  width: 80%;
+  height: 40%;
+  cursor: pointer;
+  will-change: transform, opacity;
+}
+
+/*********** QUOTE CARD ***************/
+
+.front,
+.back {
+  background-size: cover;
+  background-color: pink;
+  margin-top: 5em;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.quoteCardParent {
+  width: 60%;
+  float: center;
+}
+
+.quoteAuthorImage {
+  border-radius: 50%;
+  width: 15%;
+  position: absolute;
+  margin-left: 75%;
+  margin-top: 4%;
+  margin-bottom: 2.5%;
+}
+.quoteAuthor {
+  position: absolute;
+  display: inline-block;
+  font-size: 3em;
+  margin-left: 10%;
+  margin-top: 10%;
+  margin-bottom: auto;
+}
+
+.quote {
+  font-family: "IM Fell Great Primer", serif;
+  text-align: center;
+  font-size: 3em;
+  margin-top: 10%;
+}
+
+.quoteAuthor {
+  font-family: "Permanent Marker", cursive;
+}
+
+/*************************************/
+
+/* .quoteCard {
+  text-align: center;
+} */
+
+/******** PUBLISHED POEM CARD **********/
+.publishedPoemCard {
+  margin-right: 50%;
+  margin-left: 10%;
+}
+
+.publishedPoemCardPoem {
+  font-family: "Raleway", sans-serif;
+  font-size: x-large;
+}
+
+.publishedPoemCardPenName {
+  position: relative;
+  text-align: right;
+  font-family: "Dancing Script", cursive;
+  font-size: xx-large;
+}
+
+.publishedPoemCardShow {
+  position: relative;
+  text-align: right;
+  font-family: "Arapey", serif;
+  font-size: x-large;
+}
+
+.publishedPoemCardTitle {
+  font-size: xx-large;
+  font-family: "Acme", sans-serif;
+}
+
+/***************************************/
+
+/****** COMMMNENTS ******/
+
+.commentForm {
+  margin: 0 2% 3% 2%;
+}
+
+.commentFormPostButton {
+  float: right;
+}
+
+.previousComments {
+  margin: 0 2% 3%;
+}
+
+.comment {
+  font-size: x-large;
+  font-family: "Raleway", sans-serif;
+  margin-left: 2%;
+}
+
+.viewReplies {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  margin-left: 2%;
+}
+.viewReplies:focus {
+  outline: none !important;
+  box-shadow: none;
+}
+
+.replyButton {
+  float: right;
+}
+
+.commenter {
+  font-family: "Ubuntu", cursive;
+  font-size: larger;
+  font-weight: 600;
+}
+
+.reply-div {
+  margin-left: 5%;
+}
+
+.reply {
+  margin-left: 2%;
+  font-family: "Raleway", sans-serif;
+  font-size: x-large;
+}
+
+.replier {
+  font-family: "Ubuntu", cursive;
+  font-weight: 600;
+  font-size: larger;
+}
+/************************/

@@ -19,7 +19,7 @@ function PublishMessage(){
         })
     }, []);
     return(
-        <h1>Namaste</h1>
+        <h1>Successfully Published</h1>
     )
 }
 

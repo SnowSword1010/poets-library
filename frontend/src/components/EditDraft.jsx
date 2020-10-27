@@ -8,6 +8,7 @@ function EditDraft() {
     const { poetData, setPoetData } = useContext(UserContext);
     const [title, setTitle] = useState("");
     const [poem, setPoem] = useState("");
+    const history = useHistory();
     useEffect(() => {
         const penName = poetData.poet.penName;
         const draft_no = window.location.pathname.split('/')[2];
@@ -47,6 +48,7 @@ function EditDraft() {
             .catch(err => {
                 console.log(err);
             })
+            history.push("/mypoetries");
     }
 
     function TypwriterHeading() {

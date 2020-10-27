@@ -36,6 +36,7 @@ function NewPoetry() {
             console.log(response);
         })
         console.log(poetry);
+        history.push("/mypoetries");
     }
 
     return (

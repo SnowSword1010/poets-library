@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
 import UserContext from "./context/UserContext";
+import BorderColorIcon from '@material-ui/icons/BorderColor';
 import { useHistory } from "react-router-dom";
 
 function PenName(){
@@ -21,8 +22,8 @@ function PenName(){
 
     return(
         <form method="post" action="/poetprofilecreation" onSubmit={handleSubmitClick}>
-            <input type = "text" placeholder = "Enter your penname" name="penName" className = "form-control"></input>
-            <button type = "submit">Submit</button>
+            <input type = "text" placeholder = "Enter your penname" name="penName" className = "form-control penName"></input>
+            <button type = "submit" className="penNameButton"><BorderColorIcon></BorderColorIcon></button>
         </form>
     )
 }

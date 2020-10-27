@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom"; import axios from "axios";
 import UserContext from "./context/UserContext";
 import { useHistory } from "react-router-dom";
+import SubdirectoryArrowLeftIcon from '@material-ui/icons/SubdirectoryArrowLeft';
 
 export default function Comment(props) {
     const { poetData, setPoetData } = useContext(UserContext);
@@ -23,7 +24,7 @@ export default function Comment(props) {
     }
 
     function showReplyBox() {
-        document.getElementsByClassName("reply-box-pop-up")[props.idx].innerHTML = "<textarea cols = '2' rows = '2' name='text' id='text_id' class='form-control' style='resize:vertical' ></textarea><button>Post</button>";
+        document.getElementsByClassName("reply-box-pop-up")[props.idx].innerHTML = "<textarea style='margin-bottom = 2%' cols = '2' rows = '2' name='text' id='text_id' class='form-control' style='resize:vertical' ></textarea><button class='btn btn-dark btn-sm commentFormPostButton'>Post</button>";
     }
 
     function showReplies() {
@@ -44,13 +45,16 @@ export default function Comment(props) {
     }
 
     return (
-        <div>
-            <h4>{props.commenter}   <button onClick={showReplyBox}>Reply</button></h4>
+        <div className="previousComments">
+            <div>
+                <div className="commenter">{props.commenter}</div>
+                <div className="comment">{props.comment}</div>
+                <button onClick={showReplyBox} className="replyButton viewReplies"><SubdirectoryArrowLeftIcon /></button>
+            </div>
             <form onSubmit={handleSubmit}><div id="reply-box-pop-up" className="reply-box-pop-up"></div></form>
-            <p>{props.comment}</p>
-            <button onClick={showReplies}>View Replies</button>
+            <button className="viewReplies" onClick={showReplies}>View Replies</button>
             {replies.map(element => {
-                return <div><h1>{element.replier_penName}</h1><p>{element.reply}</p></div>
+                return <div className="reply-div"><div className="replier">{element.replier_penName}</div><div className="reply">{element.reply}</div></div>
             })}
         </div>
     )

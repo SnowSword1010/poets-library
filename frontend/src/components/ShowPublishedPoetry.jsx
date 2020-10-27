@@ -53,9 +53,9 @@ export default function ShowPublishedPoetry() {
                 <h5 className="show-published-poetry-poet-name">~{poet}</h5>
                 <textarea className="form-control new-poetry-form-content" id="exampleFormControlTextarea1" rows="50" placeholder="content" value={poemContent} readOnly></textarea>
             </div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="commentForm">
                 <textarea className="form-control" id="exampleFormControlTextarea1" rows="5" placeholder="Write a comment"></textarea>
-                <button type="submit" class="btn btn-dark mb-2">Post</button>
+                <button type="submit" className="btn btn-dark mb-2 commentFormPostButton">Post</button>
             </form>
             <div>{comments.map((element, idx) => { return (<Comment idx={idx} commentId={element._id} commenter={element.commenter} comment={element.comment} replies={element.replies}></Comment>) })}</div>
         </div>

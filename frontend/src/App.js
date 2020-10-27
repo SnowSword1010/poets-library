@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-// import 'bootstrap/dist/css/bootstrap.min.css';
 import Heading from "./components/Heading";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import RhymingTool from "./components/RhymingTool";
+import LiteraryToolbox from "./components/LiteraryToolbox";
+import DefinitionTool from "./components/Definition Tool";
+import SynonymTool from "./components/SynonymTool";
 import { render } from 'react-dom';
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
@@ -63,6 +65,9 @@ function App() {
         <div>
           <Heading></Heading>
           <Navbar></Navbar>
+          <Route exact path="/">
+            <Home></Home>
+          </Route>
           <Route exact path="/login">
             <Login></Login>
           </Route>
@@ -72,11 +77,17 @@ function App() {
           <Route exact path="/poetprofilecreation">
             <PenName></PenName>
           </Route>
-          <Route exact path="/">
-            <Home></Home>
+          <Route exact path="/literarytoolbox">
+            <LiteraryToolbox></LiteraryToolbox>
           </Route>
           <Route exact path="/rhymingtool">
             <RhymingTool></RhymingTool>
+          </Route>
+          <Route exact path="/definitiontool">
+            <DefinitionTool></DefinitionTool>
+          </Route>
+          <Route exact path="/synonymtool">
+            <SynonymTool></SynonymTool>
           </Route>
           <Route exact path="/newpoetry">
             <NewPoetry></NewPoetry>

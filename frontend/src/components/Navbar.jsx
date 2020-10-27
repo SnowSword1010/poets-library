@@ -47,7 +47,7 @@ function Navbar() {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav mr-auto">
                     <li className="nav-item">
-                        <Link to="/rhymingtool" className="nav-link" name="Rhyming Tool"><div className="nav-text-beside-svg">Rhyming Tool</div>
+                        <Link to="/literarytoolbox" className="nav-link" name="Literary Toolbox"><div className="nav-text-beside-svg">Literary Toolbox</div>
                             <div className="svg-imgs-div">
                                 <svg class="icon svg-imgs">
                                     <use xlinkHref="icons/Mycollection-SVG-sprite.svg#literature" />

@@ -243,18 +243,19 @@ app.get("/quote", (req, res) => {
 
 
 app.post("/newpoetry", async (req, res) => {
-    Draft.findOneAndUpdate({ penName: req.body.penName })
+    Draft.findOne({ penName: req.body.penName })
         .then(draft => {
             if (!draft) {
                 Draft.create({ penName: req.body.penName, drafts: [{ draft_id: 1, draft_title: req.body.title, draft_content: req.body.poem }] })
             }
-
-            // Omitting the extre arr varaible results in some sort of error
-            const arr = draft.drafts;
-            arr.push({ draft_id: arr.length + 1, draft_title: req.body.title, draft_content: req.body.poem });
-            console.log(arr);
-            draft.drafts = arr;
-            draft.save();
+            else {
+                // Omitting the extre arr varaible results in some sort of error
+                const arr = draft.drafts;
+                arr.push({ draft_id: arr.length + 1, draft_title: req.body.title, draft_content: req.body.poem });
+                console.log(arr);
+                draft.drafts = arr;
+                draft.save();
+            }
         }
         )
         .catch(err => {
@@ -286,7 +287,7 @@ app.get("/edit/:penName/:draft_id", async (req, res) => {
 })
 
 app.post("/update/:penName/:draft_id", async (req, res) => {
-    Draft.findOneAndUpdate({ penName: req.body.penName })
+    Draft.findOne({ penName: req.body.penName })
         .then(draft => {
             const arr = draft.drafts;
             arr[req.params.draft_id - 1].draft_title = req.body.title;
@@ -381,7 +382,7 @@ app.post("/replies", async (req, res) => {
     Comment.findOne({ poetry_id: req.body.poetryId })
         .then(poetry => {
             poetry.comments.filter(obj => {
-                if(obj._id == req.body.commentId){
+                if (obj._id == req.body.commentId) {
                     obj.replies.push(reply);
                     console.log(obj);
                     poetry.save();
@@ -390,14 +391,31 @@ app.post("/replies", async (req, res) => {
         })
 })
 
-app.post("/showReplies", async (req,res) => {
+app.post("/showReplies", async (req, res) => {
     Comment.findOne({ poetry_id: req.body.poetryId })
         .then(poetry => {
             poetry.comments.filter(obj => {
-                if(obj._id == req.body.commentId){
+                if (obj._id == req.body.commentId) {
                     res.json(obj.replies);
                 }
             })
+        })
+})
+
+app.post("/deletedraft", async (req, res) => {
+    // console.log(req.body);
+    Draft.findOne({ penName: req.body.penName })
+        .then(draft => {
+            draft.drafts.splice(req.body.idx, 1);
+            for (let i = req.body.idx; i < draft.drafts.length; i++) {
+                draft.drafts[i].draft_id = i;
+            }
+            draft.save();
+            res.send("Success");
+        })
+        .catch(err => {
+            console.log(err);
+            res.send("Failure");
         })
 })
 
